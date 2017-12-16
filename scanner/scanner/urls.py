@@ -18,11 +18,12 @@ from django.urls import path
 from marker.views import *
 
 urlpatterns = [
+    #path('', test_view, name='test_root'),
     path('admin/', admin.site.urls),
     path('test/', test_view, name='test'),
     path('mark-text/', mark_text, name='mark-text'),
     path('view-marked/', view_marked, name='view-marked'),
     path('update-marked/', update_marked, name='update-marked'),
     path('new/', enter_text, name='view-marked'),
-    path('all/', all, name='view-all'),
+    path('', all, name='view-all'),
 ]
