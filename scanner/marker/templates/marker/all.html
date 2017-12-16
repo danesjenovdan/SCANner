@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- meta info + OG tags -->
+  <title>Razglednica z Visa</title>
+  <meta name="description" content="S pomočjo preiskovalne metode SCAN smo analizirali izjavi, ki sta ju glede objave poslankinih fotografij na Nova24TV na družbenih medijih objavila Violeta Tomić in Branko Grims. Sami se odločite, kdo je bolj verodostojen!">
+  <meta name="author" content="Danes je nov dan, Inštitut za druga vprašanja">
+  <link rel="shortcut icon" href="http://danesjenovdan.si/favicon.ico">
+
+  <meta property="og:title" content="Razglednica z Visa" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="S pomočjo preiskovalne metode SCAN smo analizirali izjavi, ki sta ju glede objave poslankinih fotografij na Nova24TV na družbenih medijih objavila Violeta Tomić in Branko Grims. Sami se odločite, kdo je bolj verodostojen!"
+  />
+  <meta property="og:image" content="http://danesjenovdan.si/razglednica-z-visa/og-image.png" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@danesjenovdan">
+  <meta name="twitter:title" content="Razglednica z Visa">
+  <meta name="twitter:description" content="S pomočjo preiskovalne metode SCAN smo analizirali izjavi, ki sta ju glede objave poslankinih fotografij na Nova24TV na družbenih medijih objavila Violeta Tomić in Branko Grims. Sami se odločite, kdo je bolj verodostojen!">
+  <meta name="twitter:image" content="http://danesjenovdan.si/razglednica-z-visa/og-image.png">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+  <!-- font -->
+  <link href='http://fonts.googleapis.com/css?family=Titillium+Web:200,400,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+
+  <!-- icons -->
+  <link href="http://danesjenovdan.si/borut/css/genericons.css" rel="stylesheet">
+
+  <link href="/static/display/style.css" rel="stylesheet">
+
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="title">SCANNER TOOL ANALIZE</h1>
+
+    <div class="big-text">Spodaj so zbrane analize, klikni na eno in videl jo boš.</div>
+
+    <div id="statements">
+      <ul>
+      {% for analysis in analyses %}
+        <li>
+          <a href="/view-marked/?id={{ analysis.id }}">{{ analysis }} ...</a> {{ analysis.created_at }}
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <footer>Danes je nov dan in <a href="http://www.ebsi.eu/">Evropski inštitut za vedenjske študije</a></footer>
+  </div>
+  <!-- Piwik -->
+  <script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(["setDomains", ["*.danesjenovdan.si", "*.www.danesjenovdan.si"]]);
+    _paq.push(["setDoNotTrack", true]);
+    _paq.push(["disableCookies"]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u = "//zy.si/";
+      _paq.push(['setTrackerUrl', u + 'piwik.php']);
+      _paq.push(['setSiteId', 10]);
+      var d = document,
+        g = d.createElement('script'),
+        s = d.getElementsByTagName('script')[0];
+      g.type = 'text/javascript';
+      g.async = true;
+      g.defer = true;
+      g.src = u + 'piwik.js';
+      s.parentNode.insertBefore(g, s);
+    })();
+  </script>
+  <noscript><p><img src="//zy.si/piwik.php?idsite=10" style="border:0;" alt="" /></p></noscript>
+  <!-- End Piwik Code -->
+
+  <script>
+    $(document).ready(function() {
+      $('#submit-text').on('click', function() {
+        $.post('http://127.0.0.1:8000/mark-text/', {
+          text: $('#text').val()
+        }, function(r) {
+          document.location.href = '/view-marked/?id=' + r;
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

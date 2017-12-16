@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- meta info + OG tags -->
+  <title>Razglednica z Visa</title>
+  <meta name="description" content="S pomočjo preiskovalne metode SCAN smo analizirali izjavi, ki sta ju glede objave poslankinih fotografij na Nova24TV na družbenih medijih objavila Violeta Tomić in Branko Grims. Sami se odločite, kdo je bolj verodostojen!">
+  <meta name="author" content="Danes je nov dan, Inštitut za druga vprašanja">
+  <link rel="shortcut icon" href="http://danesjenovdan.si/favicon.ico">
+
+  <meta property="og:title" content="Razglednica z Visa" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="S pomočjo preiskovalne metode SCAN smo analizirali izjavi, ki sta ju glede objave poslankinih fotografij na Nova24TV na družbenih medijih objavila Violeta Tomić in Branko Grims. Sami se odločite, kdo je bolj verodostojen!"
+  />
+  <meta property="og:image" content="http://danesjenovdan.si/razglednica-z-visa/og-image.png" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@danesjenovdan">
+  <meta name="twitter:title" content="Razglednica z Visa">
+  <meta name="twitter:description" content="S pomočjo preiskovalne metode SCAN smo analizirali izjavi, ki sta ju glede objave poslankinih fotografij na Nova24TV na družbenih medijih objavila Violeta Tomić in Branko Grims. Sami se odločite, kdo je bolj verodostojen!">
+  <meta name="twitter:image" content="http://danesjenovdan.si/razglednica-z-visa/og-image.png">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+  <!-- font -->
+  <link href='http://fonts.googleapis.com/css?family=Titillium+Web:200,400,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+
+  <!-- icons -->
+  <link href="http://danesjenovdan.si/borut/css/genericons.css" rel="stylesheet">
+
+  <link href="style.css" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script>
+
+  <script src="data.js"></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="title">SCANNER TOOL TEST</h1>
+
+    <div class="big-text">Spodnje je analiziral računalnik. Prosim preveri njegovo delo.</div>
+
+    <div id="statements">
+      <div class="filters">
+        <div :class="'boxes boxes-active-' + selectedFilter">
+          <div v-for="(explanation, name) in filters" :class="['box', 'box-' + name]" @click="activateFilter(name)">
+          </div>
+        </div>
+        <div class="explanation">{{selectedFilterDescription}}</div>
+      </div>
+      <div :class="'texts active-filter-' + (selectedFilter || 'all')">
+        <div class="text" @mouseup="selectText" v-html="renderedText">
+          <!-- content comes below -->
+          <!-- POVSEM  <span class="circled">RAZUMEM</span> REAKCIJO GLEDALCEV NAVIJAČEV  <span class="blue">SAJ</span>  <span class="circled">SO</span> V PRVI VRSTI  <span class="circled">PRIŠLI</span> ZARADI FANTOV KI  <span class="circled">SO</span>  <span class="purple circled">NAS</span>  <span class="circled">PONESLI</span> RES V EVROPSKO ZMAGO IN SEVEDA SVETOVNO PREPOZNAVNOST. A VENDAR  <span class="circled">JE</span> PRAV DA  <span class="circled">SE</span> NA DRŽAVNI RAVNI TUDI  <span class="circled">POKLONIMO</span> TEM USPEHOV IN TO  <span class="circled">JE</span>  <span class="circled">BIL</span> TUDI NAMEN. FANTJE  <span class="circled">SO</span>  <span class="circled">BILI</span> VESELI DA  <span class="purple circled">SMO</span>  <span class="circled">BILI</span> TAM V PODPORO TUDI  <span class="pink">KO</span>  <span class="purple circled">SMO</span>  <span class="circled">NAVIJALI</span> IN PRAV  <span class="circled">JE</span> DA NA PREDSEDNIŠKI RAVNI TO VEČKRAT  <span class="circled">STORIMO</span> PRAV IZ RAZLOGA  <span class="blue">KER</span>  <span class="purple circled">NAS</span> ŠPORT ČE KAJ DRUGEGA V SLOVENIJI VEDNO ZNOVA  <span class="circled">POVEZUJE</span>. V TEM TRENUTKU TRUDO. ZANIMIVA POT IN PREDVSEM OSEBNOST V KATERO  <span class="circled">VERJAMEM</span>. -->
+        </div>
+      </div>
+    </div>
+
+    <div class="big-text middle-title">
+        <div id="disqus_thread"></div>
+        <script>
+        
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://scanner-1.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                                    
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="social-box">
+      <span class="big-text">Povej naprej!</span>
+      <a href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Fdanesjenovdan.si%2Frazglednica-z-visa%2F&amp;t=Verjameš%20zgodbi%20Branka%20Grimsa%20ali%20Violete%20Tomić?%20Preveri,%20kaj%20o%20njuni%20(ne)doslednosti%20pravi%20preiskovalna%20metoda%20SCAN"
+        class="genericon genericon-facebook-alt social-icon"></a>
+      <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fdanesjenovdan.si%2Frazglednica-z-visa%2F&amp;via=danesjenovdan&amp;text=Verjame%C5%A1%20zgodbi%20B.%20Grimsa%20ali%20V.%20Tomi%C4%87%3F%20Kaj%20o%20njuni%20nedoslednosti%20pravi%20preiskovalna%20metoda%20SCAN%3F&amp;original_referer=http%3A%2F%2Fdanesjenovdan.si%2Frazglednica-z-visa%2F"
+        class="genericon genericon-twitter social-icon"></a>
+      <a href="mailto:?subject=Razglednica z Visa&amp;body=Verjameš zgodbi Branka Grimsa ali Violete Tomić? Preveri, kaj o njuni (ne)doslednosti pravi preiskovalna metoda SCAN. http%3A%2F%2Fdanesjenovdan.si%2Frazglednica-z-visa%2F" class="genericon genericon-mail social-icon"></a>
+    </div>
+
+    <footer>Danes je nov dan in <a href="http://www.ebsi.eu/">Evropski inštitut za vedenjske študije</a></footer>
+  </div>
+  <script src="script.js"></script>
+  <!-- Piwik -->
+  <script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(["setDomains", ["*.danesjenovdan.si", "*.www.danesjenovdan.si"]]);
+    _paq.push(["setDoNotTrack", true]);
+    _paq.push(["disableCookies"]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u = "//zy.si/";
+      _paq.push(['setTrackerUrl', u + 'piwik.php']);
+      _paq.push(['setSiteId', 10]);
+      var d = document,
+        g = d.createElement('script'),
+        s = d.getElementsByTagName('script')[0];
+      g.type = 'text/javascript';
+      g.async = true;
+      g.defer = true;
+      g.src = u + 'piwik.js';
+      s.parentNode.insertBefore(g, s);
+    })();
+  </script>
+  <noscript><p><img src="//zy.si/piwik.php?idsite=10" style="border:0;" alt="" /></p></noscript>
+  <!-- End Piwik Code -->
+</body>
+
+</html>

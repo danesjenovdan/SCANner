@@ -99,3 +99,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+
+
+
+
+# THE BRAINS
+sl.lexicon.guesser
+sl.lexicon.train

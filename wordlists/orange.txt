@@ -1,0 +1,7 @@
+povedati
+reči
+govoriti
+pripovedovati
+praviti
+dejati
+pozdraviti # dodal filip za testiranje
