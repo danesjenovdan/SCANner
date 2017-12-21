@@ -60,8 +60,8 @@ $(document).ready(function() {
         }
       },
       renderedText: function() {
-        var fullText = this.sentences.reduce(function(prev, cur) {
-          var sentence = cur.reduce(function(prev, cur) {
+        var fullText = this.sentences.reduce(function(prev, cur, i) {
+          var sentence = cur.reduce(function(prev, cur, j) {
             var word = cur[0];
             var classString = '';
             for (key in cur[4]) {
@@ -69,7 +69,7 @@ $(document).ready(function() {
                 classString += ` ${key}`;
               }
             }
-            return `${prev}<span class="${classString}">${word}</span>`;
+            return `${prev}<span class="${classString}" id="${i},${j}">${word}</span>`;
           }, '');
           return prev + sentence;
         }, '');
@@ -174,66 +174,64 @@ $(document).ready(function() {
             alert('Prosim izbiraj pazljivo. Samo cele besede. :)')
           } else if (this.selectedFilter) {
             // a filter is selected, time to find the words selected
-            console.log(selection_text);
-            console.log(selection);
-            indexOfSelectionText = this.justText.indexOf(selection_text);
-            console.log(indexOfSelectionText);
 
-            // find first word index
-            var firstWords = this.justWords.filter(function(e, i) {
-              return e[2] === indexOfSelectionText;
-            });
-            if (firstWords.length === 1) {
-              var firstWordCoords = firstWords[0][5];
-            } else {
-              alert('Našel sem več kot eno prvo besedo ...');
-            }
-            // var firstWord = this.justWords[$(selection.anchorNode).parent().index()];
-            // console.log($(selection.anchorNode).parent().index());
-            // var firstWordCoords = firstWord[5];
-            // console.log(firstWordCoords);
+            console.log('thing');
+            
+            // first word
+            const sentence_i = selection.anchorNode.parentElement.id.split(',')[0];
+            const word_i = selection.anchorNode.parentElement.id.split(',')[1];
+            var firstWordCoords = [parseInt(sentence_i), parseInt(word_i)];
 
-            // find last word index
-            var lastWords = this.justWords.filter(function(e, i) {
-              return e[3] === indexOfSelectionText + selection_text.length;
-            });
-            if (lastWords.length === 1) {
-              var lastWordCoords = lastWords[0][5];
-            } else {
-              alert('Našel sem več kot eno zadnjo besedo ...')
-            }
+            console.log(firstWordCoords);
 
-            console.log(firstWordCoords, lastWordCoords);
+            // all other words
+            var numberOfWords = selection_text.split(' ').length;
+            console.log(numberOfWords);
+            var numberOfOtherTokens = selection_text.length - selection_text.split(' ').reduce(function(prev, curr) {
+              return prev + curr.length;
+            }, 0);
+            console.log(numberOfOtherTokens);
 
             // let's update all the sentences
             currentSentence = firstWordCoords[0];
             currentWord = firstWordCoords[1];
-            lastSentence = lastWordCoords[0];
-            lastWord = lastWordCoords[1];
+
+            var whileLimit = firstWordCoords[1] + numberOfWords + numberOfOtherTokens;
+            
+            while (currentWord < whileLimit) {
+              if (currentWord === this.sentences[currentSentence].length) {
+                whileLimit -= (currentWord - 1);
+                currentWord = 0;
+                currentSentence += 1;
+              }
+              console.log(currentWord);
+              this.sentences[currentSentence][currentWord][4][this.selectedFilter] = !this.sentences[currentSentence][currentWord][4][this.selectedFilter];
+              currentWord += 1;
+            }
 
             // while currentSentence isn't the last one, we can mark all the words
-            while (currentSentence < lastSentence) {
-              console.log(currentSentence, lastSentence);
-              while (currentWord < this.sentences[currentSentence].length) {
-                console.log(currentWord, this.sentences[currentSentence].length);
-                this.sentences[currentSentence][currentWord][4][this.selectedFilter] = !this.sentences[currentSentence][currentWord][4][this.selectedFilter];
-                // increment currentWord
-                currentWord += 1;
-              }
-              // increment sentence
-              currentSentence += 1;
-              // reset word count
-              currentWord = 0;
-            }
+            // while (currentSentence < lastSentence) {
+            //   console.log(currentSentence, lastSentence);
+            //   while (currentWord < this.sentences[currentSentence].length) {
+            //     console.log(currentWord, this.sentences[currentSentence].length);
+            //     this.sentences[currentSentence][currentWord][4][this.selectedFilter] = !this.sentences[currentSentence][currentWord][4][this.selectedFilter];
+            //     // increment currentWord
+            //     currentWord += 1;
+            //   }
+            //   // increment sentence
+            //   currentSentence += 1;
+            //   // reset word count
+            //   currentWord = 0;
+            // }
 
-            if (currentSentence === lastSentence) {
-              while (currentWord <= lastWord) {
-                console.log(currentWord, this.sentences[currentSentence].length);
-                this.sentences[currentSentence][currentWord][4][this.selectedFilter] = !this.sentences[currentSentence][currentWord][4][this.selectedFilter];
-                // increment currentWord
-                currentWord += 1;
-              }
-            }
+            // if (currentSentence === lastSentence) {
+            //   while (currentWord <= lastWord) {
+            //     console.log(currentWord, this.sentences[currentSentence].length);
+            //     this.sentences[currentSentence][currentWord][4][this.selectedFilter] = !this.sentences[currentSentence][currentWord][4][this.selectedFilter];
+            //     // increment currentWord
+            //     currentWord += 1;
+            //   }
+            // }
 
             // var span = document.createElement('span');
             // $(span).addClass(this.selectedFilter);
