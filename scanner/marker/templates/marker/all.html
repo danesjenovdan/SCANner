@@ -97,7 +97,7 @@
   <script>
     $(document).ready(function() {
       $('#submit-text').on('click', function() {
-        $.post('http://127.0.0.1:8000/mark-text/', {
+        $.post('http://scanner.knedl.si/mark-text/', {
           text: $('#text').val()
         }, function(r) {
           document.location.href = '/view-marked/?id=' + r;

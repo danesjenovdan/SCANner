@@ -104,7 +104,7 @@ $(document).ready(function() {
     methods: {
       updateData: function() {
         console.log(this.sentences);
-        $.post('http://127.0.0.1:8000/update-marked/', {
+        $.post('http://scanner.knedl.si/update-marked/', {
             id: document.location.href.split('id=')[1],
             data: JSON.stringify(this.sentences),
         }, function(r) {
