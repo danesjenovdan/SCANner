@@ -253,6 +253,8 @@ class SimpleMarker:
         # osebni_glagoli_re = re.compile('Vm..[123].*')
         for i, token in enumerate(lemmatised_tokens):
             print(token)
+            # check if osebni glagol
+            
             # if osebni_glagoli_re.match(token[0]):
             print(lemmatised_tokens)
             #    print(token[0], token[1], tokens[i])
@@ -296,7 +298,7 @@ class SimpleMarker:
 
             wordlist_circled_words = [circle_marker.is_circle(token[1].lower()) for token in tagged_tokens]
             # this was removed from below `and tagged_tokens[i][1] != 'biti'`
-            tagger_circled_words = [(token != tagged_tokens[i][1] and 'Verb-' in tagged_tokens[i][0]) for i, token in  enumerate(only_tokens)]
+            tagger_circled_words = [(('VForm' in tagged_tokens[i][0]) and ('infinitive' not in tagged_tokens[i][0])) for i, token in  enumerate(only_tokens)]
 
             circled_words = [a or b for a, b in zip(wordlist_circled_words, tagger_circled_words)]
 
