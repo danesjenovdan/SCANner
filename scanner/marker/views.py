@@ -9,6 +9,8 @@ from marker.simplemarker import SimpleMarker
 
 import json
 
+from django.forms.models import model_to_dict
+
 # Create your views here.
 
 def test_view(request):
@@ -55,7 +57,7 @@ def update_marked(request):
     return HttpResponse(marked.id)
 
 def all(request):
-    marked_texts = MarkedText.objects.all()
+    marked_texts = MarkedText.objects.filter(visible=True)
 
     return render_to_response('marker/all.html', {'analyses': marked_texts})
 
@@ -118,3 +120,52 @@ def getAnalysisData(request):
     response["Access-Control-Allow-Headers"] = "*"
 
     return response
+
+def getAnalysisMeta(request):
+    theid = request.GET.get('id')
+
+    response = HttpResponse(0)
+    
+    if not theid:
+        response = HttpResponse(-1)
+    
+    marked = MarkedText.objects.get(pk=theid)
+
+    if marked.data:
+        response = JsonResponse(model_to_dict(marked), safe=False)
+
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET"
+    response["Access-Control-Max-Age"] = "1000"
+    response["Access-Control-Allow-Headers"] = "*"
+
+    return response
+
+def getVisibleAnalyses(request):
+    response = HttpResponse(0)
+
+    visible = MarkedText.objects.filter(visible=True)
+
+    response = JsonResponse(list(visible.values()), safe=False)
+
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET"
+    response["Access-Control-Max-Age"] = "1000"
+    response["Access-Control-Allow-Headers"] = "*"
+
+    return response
+
+def getPublishedAnalyses(request):
+    response = HttpResponse(0)
+
+    visible = MarkedText.objects.filter(published=True)
+
+    response = JsonResponse(list(visible.values()), safe=False)
+
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET"
+    response["Access-Control-Max-Age"] = "1000"
+    response["Access-Control-Allow-Headers"] = "*"
+
+    return response
+

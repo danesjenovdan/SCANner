@@ -6,7 +6,8 @@ from .models import *
 class AnalysisAdmin(admin.ModelAdmin):
     list_filter = ['visible', 'published', 'created_at']
     list_display = ['created_at', '__unicode__', 'visible', 'published']
+    list_editable = ['visible', 'published']
 
-    fields = ('text', 'data', 'visible', 'published', 'analysis', 'video_url',)
+    fields = ('title', 'date', 'visible', 'published', 'analysis', 'video_url',)
 
 admin.site.register(MarkedText, AnalysisAdmin)

@@ -12,6 +12,9 @@ class MarkedText(models.Model):
     published = models.BooleanField(default=False)
     video_url = models.URLField(blank=True, null=True)
 
+    title = models.TextField(blank=True, null=True, default='Manjka naslov')
+    date = models.DateField(blank=True, null=True)
+
     def __str__(self):
         return self.text[:50]
 

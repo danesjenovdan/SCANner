@@ -30,4 +30,7 @@ urlpatterns = [
     path('getAnalysisText/', getAnalysisText, name='getAnalysisText'),
     path('getAnalysisVideo/', getAnalysisVideo, name='getAnalysisVideo'),
     path('getAnalysisData/', getAnalysisData, name='getAnalysisData'),
+    path('getAnalysisMeta/', getAnalysisMeta, name='getAnalysisMeta'),
+    path('getVisibleAnalyses/', getVisibleAnalyses, name='getVisibleAnalyses'),
+    path('getPublishedAnalyses/', getPublishedAnalyses, name='getPublishedAnalyses'),
 ]

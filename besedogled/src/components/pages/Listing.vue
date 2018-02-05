@@ -11,11 +11,16 @@
     </div>
 
     <div class="container flex">
-      <div class="post-card">
-        <img src="https://i.imgur.com/q1pqULl.jpg">
-        <p class="date">25. 2. 2018</p>
-        <p class="name">Igor Lukšič</p>
-      </div>
+      <a
+        class="post-card"
+        v-for="analysis in publishedAnalyses"
+        :href="analysis.url"
+        :key="analysis.id"
+      >
+        <img :src="analysis.image">
+        <p class="date">{{ analysis.date || 'MANJKA DATUM' }}</p>
+        <p class="name">{{ analysis.title }}</p>
+      </a>
     </div>
   </div>
 </template>
@@ -23,6 +28,33 @@
 <script>
 export default {
   name: 'Listing',
+
+  data() {
+    return {
+      publishedAnalyses: [],
+    };
+  },
+
+  methods: {
+    getpublishedAnalyses() {
+      this.$http.get('http://admin.besedogled.si/getPublishedAnalyses/').then((response) => { // TODO fix url
+        this.publishedAnalyses = response.body.map((analysis) => {
+          const d = new Date(analysis.date);
+
+          return {
+            title: analysis.title,
+            date: `${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()}`,
+            image: analysis.image || 'https://i.imgur.com/q1pqULl.jpg',
+            url: `/analiza/${analysis.id}`,
+          };
+        });
+      });
+    },
+  },
+
+  mounted() {
+    this.getpublishedAnalyses();
+  },
 };
 </script>
 
@@ -105,6 +137,8 @@ export default {
       background: #ffffff;
       height: 270px;
       margin-bottom: 47px;
+
+      text-decoration: none;
 
       cursor: pointer;
 
