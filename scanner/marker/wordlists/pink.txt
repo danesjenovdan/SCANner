@@ -5,8 +5,7 @@ nato
 takrat
 ob tistem času # več besed
 ob istem času # več besed
-istočasno
-ko # v nekem kontekstu
+istočasno # ko # v nekem kontekstu # je bilo odstranjeno
 poprej
 tistikrat
 tačas
@@ -18,3 +17,4 @@ v tistem trenutku # več besed
 tedaj
 končno # dodal filip
 končen # dodal filip is a hack
+takoj # dodal filip na aleševo željo

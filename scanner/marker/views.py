@@ -1,5 +1,5 @@
 from django.shortcuts import render, render_to_response
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -58,3 +58,63 @@ def all(request):
     marked_texts = MarkedText.objects.all()
 
     return render_to_response('marker/all.html', {'analyses': marked_texts})
+
+def getAnalysisText(request):
+    theid = request.GET.get('id')
+
+    response = HttpResponse(0)
+
+    if not theid:
+        response = HttpResponse(-1)
+    
+    marked = MarkedText.objects.get(pk=theid)
+
+    if marked.analysis:
+        response = HttpResponse(marked.analysis)
+
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET"
+    response["Access-Control-Max-Age"] = "1000"
+    response["Access-Control-Allow-Headers"] = "*"
+
+    return response
+
+def getAnalysisVideo(request):
+    theid = request.GET.get('id')
+
+    response = HttpResponse(0)
+    
+    if not theid:
+        response = HttpResponse(-1)
+    
+    marked = MarkedText.objects.get(pk=theid)
+
+    if marked.video_url:
+        response = HttpResponse(marked.video_url)
+
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET"
+    response["Access-Control-Max-Age"] = "1000"
+    response["Access-Control-Allow-Headers"] = "*"
+
+    return response
+
+def getAnalysisData(request):
+    theid = request.GET.get('id')
+
+    response = HttpResponse(0)
+    
+    if not theid:
+        response = HttpResponse(-1)
+    
+    marked = MarkedText.objects.get(pk=theid)
+
+    if marked.data:
+        response = JsonResponse(marked.data, safe=False)
+
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET"
+    response["Access-Control-Max-Age"] = "1000"
+    response["Access-Control-Allow-Headers"] = "*"
+
+    return response

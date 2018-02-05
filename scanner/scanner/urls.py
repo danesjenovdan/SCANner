@@ -26,4 +26,8 @@ urlpatterns = [
     path('update-marked/', update_marked, name='update-marked'),
     path('new/', enter_text, name='view-marked'),
     path('', all, name='view-all'),
+
+    path('getAnalysisText/', getAnalysisText, name='getAnalysisText'),
+    path('getAnalysisVideo/', getAnalysisVideo, name='getAnalysisVideo'),
+    path('getAnalysisData/', getAnalysisData, name='getAnalysisData'),
 ]

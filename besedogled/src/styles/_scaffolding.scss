@@ -1,0 +1,39 @@
+$breakpoint: 768px;
+
+$breakpoints: (
+  small-mobile: "(max-width: #{479px})",
+  before-limbo: "(min-width: #{480px}) and (max-width: #{$breakpoint - 1px})",
+  up-to-limbo: "(max-width: #{991px})",
+  above-limbo: "(min-width: #{992px})",
+  parlatube-limbo: "(min-width: #{768px}) and (max-width: #{1014px})",
+  limbo: "(min-width: #{$breakpoint}) and (max-width: #{991px})",
+  mobile: "(max-width: #{$breakpoint - 1px})",
+  desktop: "(min-width: #{$breakpoint})",
+  mobile-arrows: "(max-width: #{1200px})"
+);
+
+@mixin respond-to($breakpoint) {
+  $mediaQuery: map-get($breakpoints, $breakpoint);
+  @media #{$mediaQuery} {
+    @content;
+  }
+}
+
+@mixin show-for($breakpoint, $displayType: block) {
+  display: none;
+  @include respond-to($breakpoint) {
+    display: $displayType;
+  }
+}
+
+// remove chrome/safari input glow
+textarea, input, button { outline: none; }
+
+.container {
+  width: 100%;
+  max-width: 981px;
+
+  position: relative;
+  overflow: hidden;
+  margin: auto;
+}

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor',
     'marker',
 ]
 
@@ -118,5 +119,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = 'http://djstatic.knedl.si/SCANner/static/'
-STATIC_ROOT = '/home/muki/djstatic/SCANner/static/'
+# STATIC_URL = 'http://djstatic.knedl.si/SCANner/static/'
+STATIC_ROOT = '/home/muki/code/djnd/SCANner/static/'
+STATIC_URL = '/static/'

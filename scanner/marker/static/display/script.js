@@ -69,7 +69,10 @@ $(document).ready(function() {
                 classString += ` ${key}`;
               }
             }
-            return `${prev}<span class="${classString}" id="${i},${j}">${word}</span>`;
+            if (word.indexOf('\n\n') === -1) {
+              return `${prev}<span class="${classString}" id="${i},${j}">${word}</span>`;
+            }
+            return `${prev}<span class="${classString}" id="${i},${j}">${word}</span><br><br>`;
           }, '');
           return prev + sentence;
         }, '');
