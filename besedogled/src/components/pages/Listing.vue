@@ -17,17 +17,35 @@
         :href="analysis.url"
         :key="analysis.id"
       >
-        <img :src="analysis.image">
+        <div class="img" :style="{ 'background-image': `url('${analysis.image}')` }"></div>
+        <p class="date">{{ analysis.date || 'MANJKA DATUM' }}</p>
+        <p class="name">{{ analysis.title }}</p>
+      </a>
+
+      <a
+        class="post-card"
+        v-for="analysis in publishedAnalyses"
+        :href="analysis.url"
+        :key="analysis.id"
+      >
+        <div class="img" :style="{ 'background-image': `url('${analysis.image}')` }"></div>
         <p class="date">{{ analysis.date || 'MANJKA DATUM' }}</p>
         <p class="name">{{ analysis.title }}</p>
       </a>
     </div>
+    <b-footer></b-footer>
   </div>
 </template>
 
 <script>
+import BFooter from '../Footer';
+
 export default {
   name: 'Listing',
+
+  components: {
+    BFooter,
+  },
 
   data() {
     return {
@@ -127,33 +145,44 @@ export default {
     }
 
     .container {
-      justify-content: space-between;
+      justify-content: space-around;
     }
 
     .post-card {
-      width: 30%;
-      max-width: 393px;
+      width: 45%;
       overflow: hidden;
       background: #ffffff;
-      height: 270px;
+      height: 150px;
       margin-bottom: 47px;
 
       text-decoration: none;
 
       cursor: pointer;
 
+      display: block;
+
       @include respond-to(mobile) {
         width: 80%;
         height: auto;
-        max-width: 80%;
         margin-left: 10%;
         padding-bottom: 20px;
       }
 
-      img {
-        width: 100%;
-        height: 184px;
+      .img {
+        width: 40%;
+        height: 100%;
         display: block;
+        float: left;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        @include respond-to(mobile) {
+          width: 100%;
+          height: 200px;
+          display: block;
+          float: none;
+        }
       }
 
       .date {
@@ -171,6 +200,9 @@ export default {
         // do
         margin-top: 20px;
         margin-left: 24px;
+
+        width: 50%;
+        float: left;
       }
 
       .name {
@@ -188,6 +220,9 @@ export default {
         // do
         margin-top: 9px;
         margin-left: 24px;
+
+        width: 50%;
+        float: left;
       }
     }
   }

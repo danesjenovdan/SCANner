@@ -14,6 +14,7 @@ class MarkedText(models.Model):
 
     title = models.TextField(blank=True, null=True, default='Manjka naslov')
     date = models.DateField(blank=True, null=True)
+    photo = models.FileField(blank=True, null=True)
 
     def __str__(self):
         return self.text[:50]

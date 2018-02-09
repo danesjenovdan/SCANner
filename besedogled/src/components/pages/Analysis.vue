@@ -26,7 +26,7 @@
         </div>
         <div class="content flex">
           <div class="col-third">
-            <div class="filters">
+            <affix class="filters" relative-element-selector="#affixer" :enabled="true">
               <div class="boxes">
                 <div
                   v-for="(explanation, name) in filters"
@@ -37,9 +37,10 @@
                   {{ explanation }}
                 </div>
               </div>
-            </div>
+            </affix>
           </div>
           <div
+            id="affixer"
             :class="'col-two-thirds active-filter-' + (selectedFilter || 'all')"
             v-html="renderedText"
           ></div>
@@ -50,12 +51,19 @@
         </div>
       </div>
     </div>
+    <b-footer></b-footer>
   </div>
 </template>
 
 <script>
+import BFooter from '../Footer';
+
 export default {
   name: 'Analysis',
+
+  components: {
+    BFooter,
+  },
 
   data() {
     return {
@@ -222,6 +230,10 @@ export default {
   @import url('https://fonts.googleapis.com/css?family=Open+Sans:300&subset=latin-ext');
   @import '../../styles/scaffolding';
 
+  .affix {
+    width: 30%;
+  }
+
   #analysis {
     width: 100%;
 
@@ -322,6 +334,11 @@ export default {
             border-bottom: 13px solid transparent;
             margin: 0 auto;
             position: relative;
+
+            @include respond-to(mobile) {
+              position: fixed;
+              bottom: 0;
+            }
           }
 
           @keyframes bounce {
@@ -355,6 +372,12 @@ export default {
               top: 0;
             }
             cursor: pointer;
+
+            @include respond-to(mobile) {
+              width: 44px;
+              overflow: hidden;
+              padding: 0;
+            }
           }
 
           .box:hover {
@@ -421,11 +444,6 @@ export default {
           font-size: 16px;
           font-weight: 300;
           line-height: 28px;
-
-          p {
-            margin: 0;
-            padding: 0 20px 20px 20px;
-          }
         }
       }
     }
@@ -435,7 +453,7 @@ export default {
 .col-two-thirds {
   p {
     margin: 0;
-    padding: 0 20px 20px 20px;
+    padding: 0;
   }
 }
 

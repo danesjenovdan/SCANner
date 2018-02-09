@@ -17,6 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from marker.views import *
 
+# FILE UPLOAD CRAP
+from django.conf.urls.static import static
+from django.conf import settings
+
 urlpatterns = [
     #path('', test_view, name='test_root'),
     path('admin/', admin.site.urls),
@@ -33,4 +37,4 @@ urlpatterns = [
     path('getAnalysisMeta/', getAnalysisMeta, name='getAnalysisMeta'),
     path('getVisibleAnalyses/', getVisibleAnalyses, name='getVisibleAnalyses'),
     path('getPublishedAnalyses/', getPublishedAnalyses, name='getPublishedAnalyses'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

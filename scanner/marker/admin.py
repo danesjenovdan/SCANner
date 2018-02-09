@@ -8,6 +8,6 @@ class AnalysisAdmin(admin.ModelAdmin):
     list_display = ['created_at', '__unicode__', 'visible', 'published']
     list_editable = ['visible', 'published']
 
-    fields = ('title', 'date', 'visible', 'published', 'analysis', 'video_url',)
+    fields = ('title', 'date', 'visible', 'published', 'analysis', 'video_url', 'photo',)
 
 admin.site.register(MarkedText, AnalysisAdmin)

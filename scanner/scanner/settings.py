@@ -119,6 +119,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-# STATIC_URL = 'http://djstatic.knedl.si/SCANner/static/'
 STATIC_ROOT = '/home/muki/code/djnd/SCANner/static/'
+MEDIA_ROOT = '/home/muki/code/djnd/SCANner/media/'
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
