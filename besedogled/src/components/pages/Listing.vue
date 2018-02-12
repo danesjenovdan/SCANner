@@ -21,17 +21,6 @@
         <p class="date">{{ analysis.date || 'MANJKA DATUM' }}</p>
         <p class="name">{{ analysis.title }}</p>
       </a>
-
-      <a
-        class="post-card"
-        v-for="analysis in publishedAnalyses"
-        :href="analysis.url"
-        :key="analysis.id"
-      >
-        <div class="img" :style="{ 'background-image': `url('${analysis.image}')` }"></div>
-        <p class="date">{{ analysis.date || 'MANJKA DATUM' }}</p>
-        <p class="name">{{ analysis.title }}</p>
-      </a>
     </div>
     <b-footer></b-footer>
   </div>
@@ -146,6 +135,7 @@ export default {
 
     .container {
       justify-content: space-around;
+      flex-wrap: wrap;
     }
 
     .post-card {

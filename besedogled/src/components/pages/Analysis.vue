@@ -26,7 +26,7 @@
         </div>
         <div class="content flex">
           <div class="col-third">
-            <affix class="filters" relative-element-selector="#affixer" :enabled="true">
+            <affix class="filters" relative-element-selector="#affixer" :enabled="!isMobile">
               <div class="boxes">
                 <div
                   v-for="(explanation, name) in filters"
@@ -56,7 +56,10 @@
 </template>
 
 <script>
+/* globals $ */
+
 import BFooter from '../Footer';
+import isMobile from 'ismobilejs';
 
 export default {
   name: 'Analysis',
@@ -150,7 +153,9 @@ export default {
       });
     },
     getAnalysisMeta() {
-      this.$http.get(`http://admin.besedogled.si/getAnalysisMeta/?id=${this.analysisId}`).then((response) => { // TODO fix url
+      // this.$http.get(`http://admin.besedogled.si/getAnalysisMeta/?id=${this.analysisId}`).then((response) => { // TODO fix url
+      this.$http.get(`http://localhost:8000/getAnalysisMeta/?id=${this.analysisId}`).then((response) => { // TODO fix url
+        console.log(response);
         this.title = response.body.title;
 
         const d = new Date(response.body.date);
@@ -187,20 +192,20 @@ export default {
       pairs.forEach((e, i) => {
         console.log(i, e);
         if ($('.arrow').length < pairs.length) {
-          $('body').append('<div class="arrow" id="arrow' + i + '"></div>');
+          $('body').append(`<div class="arrow" id="arrow${i}"></div>`);
         }
 
         if ($(e[0]).offset().left < $(e[1]).offset().left) {
-          $('#arrow' + i).addClass('right');
-          $('#arrow' + i).css({
+          $(`#arrow${i}`).addClass('right');
+          $(`#arrow${i}`).css({
             top: $(e[0]).offset().top + 10,
             left: $(e[0]).offset().left + 10,
             bottom: ($(window).height() - ($(e[1]).offset().top + $(e[1]).outerHeight())) + 25,
             right: ($(window).width() - ($(e[1]).offset().left + $(e[1]).outerWidth())) + 30,
           });
         } else {
-          $('#arrow' + i).addClass('left');
-          $('#arrow' + i).css({
+          $(`#arrow${i}`).addClass('left');
+          $(`#arrow${i}`).css({
             top: $(e[0]).offset().top + 10,
             left: $(e[1]).offset().left + 10,
             bottom: ($(window).height() - ($(e[1]).offset().top + $(e[1]).outerHeight())) + 25,
@@ -327,17 +332,24 @@ export default {
           flex-shrink: 2;
           flex-grow: 1;
 
+          .filters  {
+            z-index: 200;
+          }
           .boxes {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            border-bottom: 13px solid transparent;
+            // border-bottom: 13px solid transparent;
             margin: 0 auto;
             position: relative;
 
             @include respond-to(mobile) {
               position: fixed;
               bottom: 0;
+              left: 0;
+              width: 100%;
+              flex-wrap: nowrap;
+              // border-bottom-width: 0px;
             }
           }
 
@@ -359,7 +371,7 @@ export default {
             padding-left: 60px;
             position: relative;
             line-height: 44px;
-            font-size: 16px;
+            font-size: 15px;
             font-family: Faustina;
 
             &::before {
@@ -372,6 +384,10 @@ export default {
               top: 0;
             }
             cursor: pointer;
+
+            @include respond-to(up-to-limbo) {
+              font-size: 11px;
+            }
 
             @include respond-to(mobile) {
               width: 44px;

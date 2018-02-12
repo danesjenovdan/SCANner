@@ -131,8 +131,14 @@ def getAnalysisMeta(request):
     
     marked = MarkedText.objects.get(pk=theid)
 
+    output = {
+        'title':  marked.title,
+        'date': marked.date,
+        'photo': marked.photo.url,
+    }
+
     if marked.data:
-        response = JsonResponse(model_to_dict(marked), safe=False)
+        response = JsonResponse(output, safe=False)
 
     response["Access-Control-Allow-Origin"] = "*"
     response["Access-Control-Allow-Methods"] = "GET"
