@@ -8,5 +8,4 @@ zato # spodnji je duplikat
 zato da # zgornji je duplikat
 saj
 da bi # dve besedi
-zakaj # v specifičnem kontekstu
 kajti
