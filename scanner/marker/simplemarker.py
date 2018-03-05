@@ -298,9 +298,9 @@ class SimpleMarker:
 
             wordlist_circled_words = [circle_marker.is_circle(token[1].lower()) for token in tagged_tokens]
             # this was removed from below `and tagged_tokens[i][1] != 'biti'`
-            tagger_circled_words = [(('VForm' in tagged_tokens[i][0]) and ('infinitive' not in tagged_tokens[i][0])) for i, token in  enumerate(only_tokens)]
+            # tagger_circled_words = [(('VForm' in tagged_tokens[i][0]) and ('infinitive' not in tagged_tokens[i][0])) for i, token in  enumerate(only_tokens)]
 
-            circled_words = [a or b for a, b in zip(wordlist_circled_words, tagger_circled_words)]
+            # circled_words = [a or b for a, b in zip(wordlist_circled_words, tagger_circled_words)]
 
             marked_sentences.append(list(zip([token[0] for token in sentence],
                                              tagged_tokens,
