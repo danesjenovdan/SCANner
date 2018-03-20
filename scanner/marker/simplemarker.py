@@ -302,6 +302,8 @@ class SimpleMarker:
 
             # circled_words = [a or b for a, b in zip(wordlist_circled_words, tagger_circled_words)]
 
+            circled_words = wordlist_circled_words
+
             marked_sentences.append(list(zip([token[0] for token in sentence],
                                              tagged_tokens,
                                              [token[1] for token in sentence],
