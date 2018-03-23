@@ -107,3 +107,6 @@ ENV/
 # THE BRAINS
 sl.lexicon.guesser
 sl.lexicon.train
+
+# THE BASE
+*.sqlite3
