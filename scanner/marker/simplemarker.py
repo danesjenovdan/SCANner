@@ -272,12 +272,27 @@ class SimpleMarker:
             osebni_glagoli_re = re.compile('Vm..[123].*')
             return osebni_glagoli_re.match(msd) is not None
     
+    class YellowMarker:
+        with open('marker/wordlists/yellow.txt', 'r') as infile:
+            yellow_words = [line.split('#')[0].strip() for line in infile.readlines()]
+        
+        def is_yellow(self, lemmatised_token):
+            return lemmatised_token in self.yellow_words
+        
+        def is_yellow_msd(self, msd):
+            msd_pronoun_re = re.compile('Pz.......*')
+            msd_verb_re = re.compile('V....*y')
+            pronoun_bool = msd_pronoun_re.match(msd) is not None
+            verb_bool = msd_verb_re.match(msd) is not None
+            return pronoun_bool or verb_bool
+    
     def mark_text(self, txt):
         tagger = Tagger()
         tokeniser = Tokeniser()
         marked_sentences = []
         
         # MARKERS
+        yellow_marker = self.YellowMarker()
         blue_marker = self.BlueMarker()
         purple_marker = self.PurpleMarker()
         orange_marker = self.OrangeMarker()
@@ -292,7 +307,9 @@ class SimpleMarker:
             tagged_tokens = tagger.tag_and_lemmatise_tokens(only_tokens)
             print(only_tokens, tagged_tokens)
 
-            # yellow_words = [False for token in only_tokens]
+            wordlist_yellow_words = [yellow_marker.is_yellow(token[1].lower()) for token in tagged_tokens]
+            msd_yellow_words = [yellow_marker.is_yellow_msd(token[0]) for token in tagged_tokens]
+            yellow_words = [a or b for a, b in zip(wordlist_yellow_words, msd_yellow_words)]
             # green_words = [False for token in only_tokens]
             # underlined_words = [False for token in only_tokens]
             blue_words = [blue_marker.is_blue(token[1].lower()) for token in tagged_tokens]
@@ -314,7 +331,7 @@ class SimpleMarker:
                                              tagged_tokens,
                                              [token[1] for token in sentence],
                                              [token[2] for token in sentence],
-                                             [{'yellow': False, 'green': False, 'underline': False, 'blue': blue, 'purple': purple, 'orange': orange, 'pink': pink, 'circled': circled} for blue, purple, orange, pink, circled in zip(blue_words, purple_words, orange_words, pink_words, circled_words)])))
+                                             [{'yellow': yellow, 'green': False, 'underline': False, 'blue': blue, 'purple': purple, 'orange': orange, 'pink': pink, 'circled': circled} for yellow, blue, purple, orange, pink, circled in zip(yellow_words, blue_words, purple_words, orange_words, pink_words, circled_words)])))
 
         return marked_sentences
     
