@@ -1,6 +1,3 @@
-#!/usr/bin/python
-#-*-coding:utf8-*-
-
 import sys
 import re
 import _pickle as pickle
@@ -84,6 +81,8 @@ def search_trie(token,trie,iscomplete=False):
       return trie[token[-len(token)+i:]]
 
 def decode(s):
+  # print('[DECODING]' + s.decode('utf-8'))
+  # return ''.join(s).strip('0')
   return s.decode('utf-8')
 
 def reverse(s):
@@ -94,7 +93,7 @@ def reverse(s):
 
 
 def search_marisa(token,trie,iscomplete=False):
-  token=reverse(u'_'+token)
+  token=reverse('_'+token)
   if token in trie:
     return [decode(e) for e in trie[token]]
   else:
@@ -103,12 +102,15 @@ def search_marisa(token,trie,iscomplete=False):
       return [e for e in [decode(e) for e in trie[sorted([(len(e),e) for e in prefixes],reverse=True)[0][1]]] if e[0] in 'NAVR']
 
 def search_full(token,trie):
-  token=reverse(u'_'+token)
+  # print('[SEARCHING FULL]' + token)
+  token=reverse('_'+token)
+  # print('[REVERSE TOKEN]' + token)
   if token in trie:
+    # print('[FOUND TOKEN IN TRIE]')
     return [decode(e) for e in trie[token]]
 
 def search_suffix(token,trie):
-  token=reverse(u'_'+token)
+  token=reverse('_'+token)
   for i in range(len(token)-3):
     hypotheses=set()
     for k,v in trie.iteritems(token[:-(i+1)]):
@@ -168,6 +170,7 @@ def extract_features_msd(sent,trie): #originally "combined2", relates to the mod
     #  suffix_sent.append(search_suffix(token.lower(),trie))
     #else:
     #  suffix_sent.append(None)
+  # print(full_sent)
   features=[]
   for index,token in enumerate(sent):
     tfeat=[]
@@ -182,7 +185,9 @@ def extract_features_msd(sent,trie): #originally "combined2", relates to the mod
       if wsuf(token,i+1)!=None:
         tfeat.append('s['+str(i+1)+']='+wsuf(token,i+1))
     if full_sent[index]!=None:
+      # print('MSDS')
       for msd in full_sent[index]:
+        # print('[MSD] ', msd)
         tfeat.append('msd='+msd)
     #elif suffix_sent[index]!=None:
     #  for msd in suffix_sent[index]:
@@ -215,13 +220,14 @@ if __name__=='__main__':
   trie=pickle.load(open(lang+'.marisa', 'rb'))
   trainer=pycrfsuite.Trainer(algorithm='pa',verbose=True)
   trainer.set_params({'max_iterations':10})
-  for sent in conll_iter(open(lang+'.conll')):
-    tokens=[e[1] for e in sent]
+  for sent in conll_iter(open(lang+'.train')):
+    tokens=[e[0] for e in sent]
     try:
-      labels=[e[4] for e in sent]
+      labels=[e[2] for e in sent]
     except:
-      print(tokens)
+      print('[TOKENS] ' + tokens)
+      pass
     feats=extract_features_msd(tokens,trie)
-    print(tokens,labels,feats)
+    # print(tokens,labels,feats)
     trainer.append(feats,labels)
   trainer.train(lang+'.msd.model')

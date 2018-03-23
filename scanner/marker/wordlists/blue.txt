@@ -9,3 +9,4 @@ zato da # zgornji je duplikat
 saj
 da bi # dve besedi
 kajti
+#zakaj # dober v posebnem kontekstu, ampak odstranjen zaenkrat

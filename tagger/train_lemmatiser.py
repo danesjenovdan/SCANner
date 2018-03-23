@@ -22,6 +22,7 @@ def extract_features_lemma(token):
   return features
 
 if __name__=='__main__':
+  print(sys.argv[1])
   lexicon=pickle.load(open(sys.argv[1]+'.train', 'rb'))
 
   train={}
@@ -43,7 +44,7 @@ if __name__=='__main__':
     p.fit(x,y)
     #print(p.predict(extract_features(u'kolege')))
     #break
-    print(msd)
+    # print(msd)
     models[msd]=p
 
   pickle.dump(models,open(sys.argv[1]+'.guesser','wb'),1)

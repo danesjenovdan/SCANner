@@ -12,7 +12,7 @@ import fileinput
 import json
 
 reldir = path.dirname(path.abspath(__file__))
-# test_text = open('test.txt', 'r').readlines()[0]
+test_text = open(path.join(reldir, 'test.txt'), 'r').readlines()[0]
 
 class Tokeniser:
     """
@@ -33,7 +33,7 @@ class Tokeniser:
 
     def test_me(self):
         tokenizer = generate_tokenizer('sl')
-        represent_from_tokeniser(process['standard'](tokenizer, test_text, 'sl'))
+        self.represent_from_tokeniser(process['standard'](tokenizer, test_text, 'sl'))
 
     def tokenise(self, txt):
         tokenizer = generate_tokenizer('sl')
@@ -66,10 +66,10 @@ class Tagger:
 
     def tag_sent(self, sent):
         return self.tagger.tag(extract_features_msd(sent, self.trie))
-    
+
     def tag_lemmatise_sent(self, sent):
         return [(a, self.get_lemma(b, a)) for a, b in zip(self.tag_sent(sent), sent)]
-    
+
     def get_lemma(self, token, msd):
         lexicon = self.lemmatiser['lexicon']
         key = token.lower() + '_' + msd
@@ -80,7 +80,7 @@ class Tagger:
                 for key in lexicon.keys(key[:-(i + 1)]):
                     return lexicon[key][0].decode('utf8')
         return self.guess_lemma(token, msd)
-    
+
     def guess_lemma(self, token, msd):
         if len(token) < 3:
             return self.apply_rule(token, "(0,'',0,'')", msd)
@@ -88,7 +88,8 @@ class Tagger:
         if msd not in model:
             return token
         else:
-            lemma = self.apply_rule(token, model[msd].predict(extract_features_lemma(token))[0], msd)
+            lemma = self.apply_rule(token, model[msd].predict(
+                extract_features_lemma(token))[0], msd)
             if len(lemma) > 0:
                 return lemma
             else:
@@ -243,22 +244,20 @@ class SimpleMarker:
         TODO: Osebne glagolske oblike.
         """
 
-        output = []
-
         circle_list = self.find_in_wordlist_file('marker/wordlists/circle.txt', tokens)
 
         # lemmatised_tokens = tagger.tag_and_lemmatise_tokens(tokens)
 
         # in a perfect world
-        # osebni_glagoli_re = re.compile('Vm..[123].*')
+        osebni_glagoli_re = re.compile('Vm..[123].*')
         for i, token in enumerate(lemmatised_tokens):
             print(token)
             # check if osebni glagol
             
-            # if osebni_glagoli_re.match(token[0]):
-            print(lemmatised_tokens)
-            #    print(token[0], token[1], tokens[i])
-            #    circle_list.append(tokens[i])
+            if osebni_glagoli_re.match(token[0]):
+            # print(lemmatised_tokens)
+               print(token[0], token[1], tokens[i])
+               circle_list.append(tokens[i])
 
         return circle_list
     
@@ -268,6 +267,10 @@ class SimpleMarker:
         
         def is_circle(self, lemmatised_token):
             return lemmatised_token in self.circle_words
+        
+        def is_circle_msd(self, msd):
+            osebni_glagoli_re = re.compile('Vm..[123].*')
+            return osebni_glagoli_re.match(msd) is not None
     
     def mark_text(self, txt):
         tagger = Tagger()
@@ -287,6 +290,7 @@ class SimpleMarker:
         for sentence in sentences:
             only_tokens = [token[0] for token in sentence]
             tagged_tokens = tagger.tag_and_lemmatise_tokens(only_tokens)
+            print(only_tokens, tagged_tokens)
 
             # yellow_words = [False for token in only_tokens]
             # green_words = [False for token in only_tokens]
@@ -297,12 +301,14 @@ class SimpleMarker:
             pink_words = [pink_marker.is_pink(token[1].lower()) for token in tagged_tokens]
 
             wordlist_circled_words = [circle_marker.is_circle(token[1].lower()) for token in tagged_tokens]
+            msd_circled_words = [circle_marker.is_circle_msd(token[0]) for token in tagged_tokens]
             # this was removed from below `and tagged_tokens[i][1] != 'biti'`
             # tagger_circled_words = [(('VForm' in tagged_tokens[i][0]) and ('infinitive' not in tagged_tokens[i][0])) for i, token in  enumerate(only_tokens)]
+            # tagged_circled_words = self.get_circle(only_tokens, tagged_tokens)
 
-            # circled_words = [a or b for a, b in zip(wordlist_circled_words, tagger_circled_words)]
-
-            circled_words = wordlist_circled_words
+            circled_words = [a or b for a, b in zip(wordlist_circled_words, msd_circled_words)]
+            # circled_words = wordlist_circled_words + msd_circled_words
+            print(circled_words)
 
             marked_sentences.append(list(zip([token[0] for token in sentence],
                                              tagged_tokens,

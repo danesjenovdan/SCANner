@@ -207,8 +207,11 @@ $(document).ready(function() {
                 currentWord = 0;
                 currentSentence += 1;
               }
-              console.log(currentWord);
-              this.sentences[currentSentence][currentWord][4][this.selectedFilter] = !this.sentences[currentSentence][currentWord][4][this.selectedFilter];
+              console.log(this.sentences[currentSentence][currentWord][1][0]);
+              if (!((this.sentences[currentSentence][currentWord][1][0] === 'Z') &&
+                (this.selectedFilter === 'circled'))) {
+                this.sentences[currentSentence][currentWord][4][this.selectedFilter] = !this.sentences[currentSentence][currentWord][4][this.selectedFilter];
+              }
               currentWord += 1;
             }
 
