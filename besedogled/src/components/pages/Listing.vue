@@ -4,10 +4,7 @@
       <div class="logo">
         <img src="../../assets/img/media-scanner-logo.svg">
       </div>
-      <p class="intro">Lorem ipsum dolor sit amet, consectetur adipisicing
-        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-        ut aliquip ex ea commodo consequat.</p>
+      <p class="intro">Besedogled je analitično orodje za preverjanje skladnosti in koherentnosti besedil. Nastal je na preseku znanstveno-raziskovalnih in forenzično-preiskovalnih metod, ki se osredotočajo na jezik. Tehnike preverjanje resničnosti, ki temeljijo na telesu, je mogoče zavesti, v jeziku pa se vsi neizogibno razgaljamo do nezavednega.</p>
     </div>
 
     <div class="container flex">
@@ -74,7 +71,7 @@ export default {
 
     .header {
       width: 100%;
-      height: 500px;
+      // height: 500px;
       background-image: linear-gradient(-232deg, #5ec2a7 0%, #5fb7f5 100%);
 
       @include respond-to(mobile) {
@@ -119,7 +116,8 @@ export default {
         // do
         text-align: center;
         margin: auto;
-        margin-top: 90px;
+        margin-top: 60px;
+        padding: 30px;
 
         @include respond-to(mobile) {
           width: 80%;
