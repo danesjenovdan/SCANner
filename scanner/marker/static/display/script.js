@@ -52,13 +52,6 @@ $(document).ready(function() {
       }
     },
     computed: {
-      selectedFilterDescription: function() {
-        if (this.selectedFilter) {
-          return this.filters[this.selectedFilter];
-        } else {
-          return 'Za razlago min filtriranje SCAN parametrov klikni na zgornji barvni označevalec.';
-        }
-      },
       renderedText: function() {
         var fullText = this.sentences.reduce(function(prev, cur, i) {
           var sentence = cur.reduce(function(prev, cur, j) {
@@ -70,9 +63,9 @@ $(document).ready(function() {
               }
             }
             if (word.indexOf('\n\n') === -1) {
-              return `${prev}<span class="${classString}" id="${i},${j}">${word}</span>`;
+              return `${prev}<span class="${classString}" id="${i},${j}" data-sentence="${i}" data-token="${j}">${word}</span>`;
             }
-            return `${prev}<span class="${classString}" id="${i},${j}">${word}</span><br><br>`;
+            return `${prev}<span class="${classString}" id="${i},${j}" data-sentence="${i}" data-token="${j}">${word}</span><br><br>`;
           }, '');
           return prev + sentence;
         }, '');
@@ -83,8 +76,8 @@ $(document).ready(function() {
       justText: function() {
         var fullText = this.sentences.reduce(function(prev, cur) {
           var sentence = cur.reduce(function(prev, cur) {
-            var word = cur[0];
-            return `${prev}${word}`;
+            var token = cur[0];
+            return `${prev}${token}`;
           }, '');
           return prev + sentence;
         }, '');
@@ -106,7 +99,6 @@ $(document).ready(function() {
     },
     methods: {
       updateData: function() {
-        console.log(this.sentences);
         $.post('http://scanner.knedl.si/update-marked/', {
             id: document.location.href.split('id=')[1],
             data: JSON.stringify(this.sentences),
@@ -172,18 +164,16 @@ $(document).ready(function() {
         console.log(selection);
         var selection_text = selection.toString();
         if (selection_text.length > 0) {
-          // something is selected
-          if (selection.anchorOffset > 0) {
-            alert('Prosim izbiraj pazljivo. Samo cele besede. :)')
-          } else if (this.selectedFilter) {
+          if (this.selectedFilter) {
             // a filter is selected, time to find the words selected
 
             console.log('thing');
             
             // first word
-            const sentence_i = selection.anchorNode.parentElement.id.split(',')[0];
-            const word_i = selection.anchorNode.parentElement.id.split(',')[1];
-            var firstWordCoords = [parseInt(sentence_i), parseInt(word_i)];
+            console.log(selection.anchorNode.parentElement);
+            const sentence_i = selection.anchorNode.parentElement.dataset.sentence;
+            const token_i = selection.anchorNode.parentElement.dataset.token;
+            var firstWordCoords = [parseInt(sentence_i), parseInt(token_i)];
 
             console.log(firstWordCoords);
 
