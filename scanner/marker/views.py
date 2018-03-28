@@ -130,11 +130,15 @@ def getAnalysisMeta(request):
         response = HttpResponse(-1)
     
     marked = MarkedText.objects.get(pk=theid)
+    if marked.photo:
+        photo_url = marked.photo.url
+    else:
+        photo_url = ''
 
     output = {
         'title':  marked.title,
         'date': marked.date,
-        'photo': marked.photo.url,
+        'photo': photo_url,
     }
 
     if marked.data:
