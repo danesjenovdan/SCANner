@@ -15,13 +15,13 @@
             </div>
           </div>
           <div class="col-two-thirds">
-            <iframe
-              :src="videoUrl"
-              width="100%"
-              height="300px"
-              frameborder="0"
-              allowfullscreen="true"
-            ></iframe>
+            <div class="player">
+              <iframe
+                :src="videoUrl"
+                frameborder="0"
+                allowfullscreen="true"
+              ></iframe>
+            </div>
           </div>
         </div>
         <div class="content flex">
@@ -481,6 +481,23 @@ export default {
       background-position: center;
       background-size: 80% 30%;
     }
+  }
+}
+
+.player {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+
+  iframe {
+    margin: auto;
+    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 }
 

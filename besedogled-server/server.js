@@ -20,7 +20,7 @@ app.get('/analiza/:analysisId', async ( req, res ) => {
     // const snippetId    = req.params.snippetId;
     // const templatePath = `${__dirname}/og_templates/snippet.ejs`;
     // const ogImagePath  = `${__dirname}/og_renders/snippet-${snippetId}.png`;
-    const $            = cheerio.load(indexHtml);
+    const $ = cheerio.load(indexHtml);
 
     // const ogExists = await new Promise(( resolve ) => {
     //   fs.exists(`${__dirname}/og_renders/snippet-${snippetId}.png`, ( exists ) => resolve(exists));
