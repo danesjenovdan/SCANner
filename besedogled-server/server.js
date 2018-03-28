@@ -86,8 +86,8 @@ app.use('/', express.static(`${__dirname}/../besedogled/dist`));
 
 // app.use('/images', express.static(`${__dirname}/og_renders`));
 
-app.listen(3000, () => {
-  console.log('Server listening on port 3000');
+app.listen(7061, () => {
+  console.log('Server listening on port 7061');
 });
 
 async function renderOg( templatePath, data, imagePath ) {
