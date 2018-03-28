@@ -91,7 +91,7 @@ export default {
       videoUrl: '',
       title: '',
       date: '',
-      displayAnalysis: false,
+      displayAnalysis: true,
       isMobile: isMobile.any,
     };
   },

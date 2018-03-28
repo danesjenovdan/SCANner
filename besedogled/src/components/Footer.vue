@@ -19,6 +19,8 @@ export default {
 
 <style lang="scss" scoped>
   #footer {
+    padding-bottom: 40px;
+
     .container {
       border-top: 3px solid #b5b4b4;
       margin-top: 20px;
