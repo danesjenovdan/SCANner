@@ -175,8 +175,6 @@ $(document).ready(function() {
             const token_i = selection.anchorNode.parentElement.dataset.token;
             var firstWordCoords = [parseInt(sentence_i), parseInt(token_i)];
 
-            console.log(firstWordCoords);
-
             // all other words
             var numberOfWords = selection_text.split(' ').length;
             console.log(numberOfWords);
