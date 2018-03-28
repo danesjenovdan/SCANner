@@ -313,6 +313,7 @@ export default {
     }
 
     .titleblock {
+      padding-bottom: 40px;
       .titlecontainer {
         height: 100%;
         display: flex;
@@ -340,7 +341,7 @@ export default {
           letter-spacing: 2px;
           text-align: right;
           margin: 0;
-          padding: 0;
+          padding: 22px;
           width: 100%;
           margin-bottom: 20px;
         }
