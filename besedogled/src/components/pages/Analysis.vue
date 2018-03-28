@@ -320,6 +320,10 @@ export default {
         flex-wrap: wrap;
         align-content: flex-end;
 
+        @include respond-to(desktop) {
+          padding: 22px;
+        }
+
         .date {
           color: #000000;
           font-family: 'Faustina', serif;
@@ -331,6 +335,10 @@ export default {
           margin: 0;
           padding: 0;
           width: 100%;
+
+          @include respond-to(mobile) {
+            text-align: center;
+          }
         }
         .title {
           color: #000000;
@@ -341,9 +349,12 @@ export default {
           letter-spacing: 2px;
           text-align: right;
           margin: 0;
-          padding: 22px;
           width: 100%;
           margin-bottom: 20px;
+
+          @include respond-to(mobile) {
+            text-align: center;
+          }
         }
       }
     }
@@ -490,6 +501,10 @@ export default {
   overflow: hidden;
   padding-bottom: 56.25%; /* 16:9 */
   height: 0;
+
+  @include respond-to(mobile) {
+    display: none;
+  }
 
   iframe {
     margin: auto;
