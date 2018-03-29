@@ -1,9 +1,9 @@
 <template>
   <div id="analysis">
     <div class="header">
-      <div class="logo">
+      <a class="logo" href="/">
         <img src="../../assets/img/media-scanner-logo.svg">
-      </div>
+      </a>
     </div>
     <div class="container">
       <div class="paper">
@@ -34,7 +34,7 @@
               <div class="boxes">
                 <div
                   v-for="(explanation, name) in filters"
-                  :class="['box', 'box-' + name]"
+                  :class="['box', 'box-' + name, {selected: selectedFilter === name}]"
                   @click="activateFilter(name)"
                   :key="name"
                 >
@@ -47,9 +47,24 @@
             id="affixer"
             :class="'col-two-thirds active-filter-' + (selectedFilter || 'all')"
             v-html="renderedText"
-          ></div>
+          >
+            <div class="bubbles-container" v-if="sentences.length === 0">
+              <div class="bubbles">
+                <span></span>
+                <span id="bubble2"></span>
+                <span id="bubble3"></span>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="flex" v-if="displayAnalysis">
+          <div class="bubbles-container" v-if="analysisText === ''">
+            <div class="bubbles">
+              <span></span>
+              <span id="bubble2"></span>
+              <span id="bubble3"></span>
+            </div>
+          </div>
           <div class="col-full analysis" v-html="analysisText"></div>
         </div>
       </div>
@@ -268,6 +283,7 @@ export default {
 
     @include respond-to(mobile) {
       height: auto;
+      padding-bottom: 30px;
     }
 
     .logo {
@@ -438,6 +454,12 @@ export default {
         width: 44px;
         overflow: hidden;
         padding: 0;
+
+        &.selected {
+          border: 2px solid #525252;
+          border-bottom: none;
+          height: 42px;
+        }
       }
     }
 
@@ -548,6 +570,12 @@ export default {
       margin-right: 0;
     }
   }
+
+  @include respond-to(mobile) {
+    margin-left: 0;
+    margin-right: 0;
+    width: calc(100% - 25px);
+  }
 }
 
 .col-two-thirds {
@@ -566,8 +594,8 @@ export default {
     line-height: 28px;
     color: #000000;
 
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 0px;
+    padding-right: 0px;
 
     @include respond-to(desktop) {
       padding-left: 100px;

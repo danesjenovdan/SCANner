@@ -7,6 +7,14 @@
       <p class="intro">Besedogled je analitično orodje za preverjanje skladnosti in koherentnosti besedil. Nastal je na preseku znanstveno-raziskovalnih in forenzično-preiskovalnih metod, ki se osredotočajo na jezik. Tehnike za preverjanje resničnosti, ki temeljijo na telesu, je mogoče zavesti, v jeziku pa se vsi neizogibno razgaljamo do nezavednega.</p>
     </div>
 
+    <div class="bubbles-container" v-if="publishedAnalyses.length === 0">
+      <div class="bubbles">
+        <span></span>
+        <span id="bubble2"></span>
+        <span id="bubble3"></span>
+      </div>
+    </div>
+
     <div class="container flex">
       <a
         class="post-card"
@@ -48,7 +56,7 @@ export default {
           return {
             title: analysis.title,
             date: `${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()}`,
-            image: analysis.image || 'https://i.imgur.com/q1pqULl.jpg',
+            image: `http://djstatic.knedl.si/SCANner/media/${analysis.photo}`,
             url: `/analiza/${analysis.id}`,
           };
         });
