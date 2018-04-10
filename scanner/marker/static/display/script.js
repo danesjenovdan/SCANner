@@ -49,6 +49,8 @@ $(document).ready(function() {
           connection: 'S puščicami povežemo besede, ki predstavljajo spremembe jezika. Slednje označujemo z zeleno barvo.'
         },
         sentences: thedata,
+        activeConnectionGroup: null,
+        connectionGroups: [],
       }
     },
     computed: {
@@ -59,7 +61,11 @@ $(document).ready(function() {
             var classString = '';
             for (key in cur[4]) {
               if (cur[4][key]) {
-                classString += ` ${key}`;
+                if (key === 'connectionGroup') {
+                  classString += ` cg cg-${cur[4][key]}`;
+                } else {
+                  classString += ` ${key}`;
+                }
               }
             }
             if (word.indexOf('\n\n') === -1) {
@@ -98,6 +104,10 @@ $(document).ready(function() {
       },
     },
     methods: {
+      addConnectionGroup: function() {
+        this.activeConnectionGroup = this.connectionGroups.length + 1;
+        this.connectionGroups.push(this.connectionGroups.length + 1);
+      },
       updateData: function() {
         $.post('http://scanner.knedl.si/update-marked/', {
             id: document.location.href.split('id=')[1],
@@ -115,48 +125,124 @@ $(document).ready(function() {
       activateFilter: function(name) {
         if (this.selectedFilter === name) {
           this.selectedFilter = null
-          $('.arrow').removeClass('hidden');
+          // $('.arrow').removeClass('hidden');
         } else {
           this.selectedFilter = name;
-          if (name === 'connection') {
-            $('.arrow').removeClass('hidden');
-          } else {
-            $('.arrow').addClass('hidden');
-          }
+          // if (name === 'connection') {
+          //   $('.arrow').removeClass('hidden');
+          // } else {
+          //   $('.arrow').addClass('hidden');
+          // }
         }
       },
 
-      drawConnections: function() {
-        var pairs = [];
-        $.each($('.connection'), function(i, e) {
-          if (0 < i) {
-            pairs.push([$('.connection')[i - 1], e]);
-          }
-        });
-        pairs.forEach(function(e, i) {
-          console.log(i, e);
-          if ($('.arrow').length < pairs.length) {
-            $('body').append('<div class="arrow" id="arrow' + i + '"></div>');
-          }
+      drawConnections: function(group) {
+        for (group in this.connectionGroups) {
+          var pairs = [];
+          var _vueThis = this;
+          $.each($(`.cg-${this.connectionGroups[group]}`), function(i, e) {
+            if (0 < i) {
+              pairs.push([$(`.cg-${_vueThis.connectionGroups[group]}`)[i - 1], e]);
+            }
+          });
+          console.log(pairs);
+          pairs.forEach(function(e, i) {
+            // let's calculate the length of the diagonal
+            var a = Math.abs($(e[0]).offset().left - $(e[1]).offset().left);
+            var b = Math.abs($(e[0]).offset().top - $(e[1]).offset().top);
+            var c = Math.sqrt((a * a) + (b * b));
+            
+            // now let's find the centre
+            var centre_x = $(e[0]).offset().left + (a / 2);
+            var centre_y = $(e[0]).offset().top + (b / 2);
 
-          if ($(e[0]).offset().left < $(e[1]).offset().left) {
-            $('#arrow' + i).addClass('right');
-            $('#arrow' + i).css({
-              top: $(e[0]).offset().top + 10,
-              left: $(e[0]).offset().left + 10,
-              bottom: ($(window).height() - ($(e[1]).offset().top + $(e[1]).outerHeight())) + 25,
-              right: ($(window).width() - ($(e[1]).offset().left + $(e[1]).outerWidth())) + 30,
-            });
-          } else {
-            $('#arrow' + i).addClass('left');
-            $('#arrow' + i).css({
-              top: $(e[0]).offset().top + 10,
-              left: $(e[1]).offset().left + 10,
-              bottom: ($(window).height() - ($(e[1]).offset().top + $(e[1]).outerHeight())) + 25,
-              right: ($(window).width() - ($(e[0]).offset().left + $(e[0]).outerWidth())) + 10,
-            });
-          }
-        });
+            // and finally the angle
+            var angle_right = Math.atan2(a, b) * 180 / Math.PI;
+            var angle_left = Math.atan2(b, a) * 180 / Math.PI;
+
+            console.log(`.arrow-group-${group}-${i}`);
+            console.log($(`.arrow-group-${group}-${i}`).length);
+            if ($(e[0]).offset().left > $(e[1]).offset().left) {
+              if ($(`.arrow-group-${group}-${i}`).length < 1) {
+                console.log('there is no arrow');
+                $('.arrow-template').not('.arrow-display')
+                  .clone()
+                  .appendTo('body')
+                  .addClass('arrow-display')
+                  .addClass(`arrow-group-${group}-${i}`)
+                  .css({
+                    transform: `rotate(${180 - angle_left}deg)`,
+                    width: `${c}px`,
+                    left: centre_x - ((3 * a) / 2),
+                    top: centre_y,
+                  });
+              } else {
+                $(`.arrow-group-${group}-${i}`)
+                  .css({
+                    transform: `rotate(${180 - angle_left}deg)`,
+                    width: `${c}px`,
+                    left: centre_x - ((3 * a) / 2),
+                    top: centre_y,
+                  });
+              }
+            } else  {
+              if ($(`.arrow-group-${group}-${i}`).length < 1) {
+                $('.arrow-template').not('.arrow-display')
+                  .clone()
+                  .appendTo('body')
+                  .addClass('arrow-display')
+                  .addClass(`arrow-group-${group}-${i}`)
+                  .css({
+                    transform: `rotate(${90 - angle_right}deg)`,
+                    width: `${c}px`,
+                    left: centre_x - (a / 2),
+                    top: centre_y,
+                  });
+              } else {
+                console.log('there is an arrow');
+                $(`.arrow-group-${group}-${i}`)
+                  .css({
+                    transform: `rotate(${90 - angle_right}deg)`,
+                    width: `${c}px`,
+                    left: centre_x - (a / 2),
+                    top: centre_y,
+                  });
+              }
+            }
+
+            // mirror arrow if necessary
+            // console.log($(e[0]).offset().left, $(e[1]).offset().left);
+            // if ($(e[0]).offset().left > $(e[1]).offset().left) {
+            //   currArrow.css({
+            //     transform: `rotate(${90 - angle}deg) rotateX(-1)`,
+            //   });
+            // }
+          });
+        }
+        // pairs.forEach(function(e, i) {
+        //   console.log(i, e);
+        //   if ($('.arrow').length < pairs.length) {
+        //     $('body').append('<div class="arrow" id="arrow' + i + '"></div>');
+        //   }
+
+        //   if ($(e[0]).offset().left < $(e[1]).offset().left) {
+        //     $('#arrow' + i).addClass('right');
+        //     $('#arrow' + i).css({
+        //       top: $(e[0]).offset().top + 10,
+        //       left: $(e[0]).offset().left + 10,
+        //       bottom: ($(window).height() - ($(e[1]).offset().top + $(e[1]).outerHeight())) + 25,
+        //       right: ($(window).width() - ($(e[1]).offset().left + $(e[1]).outerWidth())) + 30,
+        //     });
+        //   } else {
+        //     $('#arrow' + i).addClass('left');
+        //     $('#arrow' + i).css({
+        //       top: $(e[0]).offset().top + 10,
+        //       left: $(e[1]).offset().left + 10,
+        //       bottom: ($(window).height() - ($(e[1]).offset().top + $(e[1]).outerHeight())) + 25,
+        //       right: ($(window).width() - ($(e[0]).offset().left + $(e[0]).outerWidth())) + 10,
+        //     });
+        //   }
+        // });
       },
 
       selectText: function() {
@@ -196,44 +282,29 @@ $(document).ready(function() {
                 currentSentence += 1;
               }
               console.log(this.sentences[currentSentence][currentWord][1][0]);
+              // ignore punctuation for circled words
               if (!((this.sentences[currentSentence][currentWord][1][0] === 'Z') &&
                 (this.selectedFilter === 'circled'))) {
-                this.sentences[currentSentence][currentWord][4][this.selectedFilter] = !this.sentences[currentSentence][currentWord][4][this.selectedFilter];
+                if (this.selectedFilter === 'connection') {
+                  // special arrow behavior
+                  
+                  // first check if group is active
+                  if (!this.activeConnectionGroup) {
+                    alert('Prosim izberi aktivno skupino "puščic".')
+                  } else  {
+                    console.log('some group is active');
+                    this.$set(this.sentences[currentSentence][currentWord][4], 'connectionGroup', this.activeConnectionGroup);
+                    this.$set(this.sentences[currentSentence][currentWord][4], this.selectedFilter, !this.sentences[currentSentence][currentWord][4][this.selectedFilter]);
+                    this.$nextTick(this.drawConnections);
+                    // this.sentences[currentSentence][currentWord][4].connectionGroup = this.activeConnectionGroup;
+                    // this.sentences[currentSentence][currentWord][4][this.selectedFilter] = !this.sentences[currentSentence][currentWord][4][this.selectedFilter];
+                  }
+                } else {
+                  this.sentences[currentSentence][currentWord][4][this.selectedFilter] = !this.sentences[currentSentence][currentWord][4][this.selectedFilter];
+                }
               }
               currentWord += 1;
             }
-
-            // while currentSentence isn't the last one, we can mark all the words
-            // while (currentSentence < lastSentence) {
-            //   console.log(currentSentence, lastSentence);
-            //   while (currentWord < this.sentences[currentSentence].length) {
-            //     console.log(currentWord, this.sentences[currentSentence].length);
-            //     this.sentences[currentSentence][currentWord][4][this.selectedFilter] = !this.sentences[currentSentence][currentWord][4][this.selectedFilter];
-            //     // increment currentWord
-            //     currentWord += 1;
-            //   }
-            //   // increment sentence
-            //   currentSentence += 1;
-            //   // reset word count
-            //   currentWord = 0;
-            // }
-
-            // if (currentSentence === lastSentence) {
-            //   while (currentWord <= lastWord) {
-            //     console.log(currentWord, this.sentences[currentSentence].length);
-            //     this.sentences[currentSentence][currentWord][4][this.selectedFilter] = !this.sentences[currentSentence][currentWord][4][this.selectedFilter];
-            //     // increment currentWord
-            //     currentWord += 1;
-            //   }
-            // }
-
-            // var span = document.createElement('span');
-            // $(span).addClass(this.selectedFilter);
-            // span.textContent = selection_text;
-
-            // var range = selection.getRangeAt(0);
-            // range.deleteContents();
-            // range.insertNode(span);
           } else {
             // filter not selected
             alert('Izberi filter!');
@@ -241,17 +312,10 @@ $(document).ready(function() {
 
           // clearSelection();
         }
+
       },
     },
     mounted() {
-      // WARNING! THIS IS A HACK
-      var _this = this;
-      window.setTimeout(function() {
-        _this.drawConnections();
-      }, 100);
-      $(window).on('resize', function() {
-        _this.drawConnections();
-      });
     }
   });
 
