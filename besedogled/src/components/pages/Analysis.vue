@@ -90,15 +90,15 @@ export default {
     return {
       selectedFilter: null,
       filters: {
-        yellow: 'Nikalno / nepomembno',
-        green: 'Osebe / relevantne spremembe',
-        blue: 'Zapuščanje lokacije / pojasnjevanje',
-        purple: 'Needninski zaimki / navajanje časa',
-        orange: 'Navajanje komunikacije',
-        pink: 'Manjkajoči čas',
-        circled: 'Osebni zaimki in glagolske oblike',
-        underline: 'Nepravilna raba časa',
-        connection: 'Spremembe jezika',
+        yellow: 'Nikalna oblika ali/in odvečna vsebina',
+        green: 'Osebe v izjavi ali/in zamenjava pojmovanja',
+        blue: 'Navajanje zapuščanja lokacije ali/in navajanje razlogov',
+        purple: 'Uporaba osebnega zaimkov mi/midva ali/in navajanje konkretnega časa',
+        orange: 'Navajanje komuniciranja',
+        pink: 'Odsotnost navedbe konkretnega časa',
+        circled: 'Osebni zaimki in osebne glagolske oblike',
+        underline: 'Uporaba trpnika',
+        connection: 'Sled zamenjave jezika',
       },
       sentences: [],
       analysisId: this.$route.params.analysisId,
@@ -428,12 +428,14 @@ export default {
 
     .box {
       width: 100%;
+      max-width: 300px;
       height: 44px;
       padding-left: 60px;
       position: relative;
-      line-height: 44px;
-      font-size: 15px;
+      line-height: 22px;
+      font-size: 13px;
       font-family: 'Faustina', serif;
+      vertical-align: bottom;
 
       &::before {
         content: '';

@@ -4,7 +4,7 @@
       <div class="logo">
         <img src="../../assets/img/media-scanner-logo.svg">
       </div>
-      <p class="intro">Besedogled je analitično orodje za preverjanje skladnosti in koherentnosti besedil. Nastal je na preseku znanstveno-raziskovalnih in forenzično-preiskovalnih metod, ki se osredotočajo na jezik. Tehnike za preverjanje resničnosti, ki temeljijo na telesu, je mogoče zavesti, v jeziku pa se vsi neizogibno razgaljamo do nezavednega.</p>
+      <p class="intro">Besedogled je analitično orodje za preverjanje skladnosti in koherentnosti besedil. Nastal je na preseku znanstveno-raziskovalnih in forenzično-preiskovalnih metod, ki se osredotočajo na jezik. Tehnike za preverjanje resničnosti, ki temeljijo na telesu, je mogoče zavesti, v jeziku pa se vsi neizogibno razgaljamo do nezavednega.<br><br>Besedogled je analiziral odmevne izjave v Odmevih RTV Slovenija.</p>
     </div>
 
     <div class="bubbles-container" v-if="publishedAnalyses.length === 0">
@@ -58,7 +58,10 @@ export default {
             date: `${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()}`,
             image: `http://djstatic.knedl.si/SCANner/media/${analysis.photo}`,
             url: `/analiza/${analysis.id}`,
+            d: d,
           };
+        }).sort((a, b) => {
+          return b.d - a.d;
         });
       });
     },
@@ -149,7 +152,7 @@ export default {
       overflow: hidden;
       background: #ffffff;
       height: 150px;
-      margin-bottom: 47px;
+      margin-bottom: 20px;
 
       text-decoration: none;
 
