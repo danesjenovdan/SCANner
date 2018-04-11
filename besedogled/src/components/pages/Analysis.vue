@@ -45,7 +45,7 @@
           </div>
           <div
             id="affixer"
-            :class="'col-two-thirds active-filter-' + (selectedFilter || 'all')"
+            :class="['col-two-thirds active-filter-' + (selectedFilter || 'all'), 'padme']"
             v-html="renderedText"
           >
             <div class="bubbles-container" v-if="sentences.length === 0">
@@ -355,6 +355,10 @@ export default {
       flex: 2;
       flex-shrink: 1;
       flex-grow: 2;
+
+      &.padme {
+        padding-left: 15px;
+      }
     }
     .col-full {
       flex: 1 ;
@@ -461,15 +465,16 @@ export default {
     }
 
     .box {
-      width: 100%;
-      max-width: 300px;
-      height: 44px;
+      width: 90%;
+      max-width: 290px;
+      height: 35px;
       padding-left: 60px;
       position: relative;
-      line-height: 22px;
-      font-size: 13px;
+      line-height: 15px;
+      font-size: 11px;
       font-family: 'Faustina', serif;
       vertical-align: bottom;
+      padding-top: 5px;
 
       &::before {
         content: '';
@@ -550,6 +555,45 @@ export default {
       background-repeat: no-repeat;
       background-position: center;
       background-size: 80% 30%;
+    }
+
+    // BOXES BACKGROUND
+    .box-yellow {
+      background-color: rgba(253, 231, 88, 0.2);
+    }
+
+    .box-green {
+      background-color: rgba(113, 203, 149, 0.2);
+    }
+
+    .box-blue {
+      background-color: rgba(95, 183, 245, 0.2);
+    }
+
+    .box-violet,
+    .box-purple {
+      background-color: rgba(149, 97, 245, 0.2);
+    }
+
+    .box-orange {
+      background-color: rgba(255, 183, 89, 0.2);
+    }
+
+    .box-pink {
+      background-color: rgba(250, 129, 197, 0.2);
+    }
+
+    .box-circle,
+    .box-circled {
+      background-color: rgba(195, 195, 195, 0.2);
+    }
+
+    .box-underline {
+      background-color: rgba(209, 209, 209, 0.2);
+    }
+
+    .box-connection {
+      background-color: hsla(0, 0%, 89%, 0.2);
     }
   }
 }
