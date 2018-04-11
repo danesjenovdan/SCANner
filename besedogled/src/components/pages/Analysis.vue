@@ -25,8 +25,8 @@
           </div>
         </div>
         <div class="content flex">
-          <div :class="['btn', 'btn-tab', {selected: displayAnalysis}]" @click="displayAnalysis = true">Analiza</div>
-          <div :class="['btn', 'btn-tab', {selected: !displayAnalysis}]" @click="displayAnalysis = false">Transkript</div>
+          <div :class="['btn', 'btn-tab', {selected: displayAnalysis}]" @click="displayAnalysis = true"><img class="inline-img" src="../../assets/img/analiza.png">Analiza</div>
+          <div :class="['btn', 'btn-tab', {selected: !displayAnalysis}]" @click="displayAnalysis = false"><img class="inline-img" src="../../assets/img/besedilo.png">Transkript</div>
         </div>
         <div class="flex" v-if="!displayAnalysis">
           <div class="col-third">
@@ -68,6 +68,7 @@
           <div class="col-full analysis" v-html="analysisText"></div>
         </div>
       </div>
+      <a href="/" class="goback">Nazaj na seznam analiz</a>
     </div>
     <b-footer></b-footer>
   </div>
@@ -261,8 +262,41 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300&subset=latin-ext');
 @import '../../styles/scaffolding';
 
+.goback {
+  color: #000000;
+  font-family: 'Faustina', serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 40px;
+  display: block;
+
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline
+  }
+
+  margin-top: 25px;
+  margin-bottom: 10px;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    position: relative;
+    top: 8px;
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    background-image: url('../../assets/img/nazaj.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+}
+
 .vue-affix {
   padding-top: 20px;
+  max-width: 300px;
 }
 
 #affixer {
@@ -577,6 +611,22 @@ export default {
     margin-left: 0;
     margin-right: 0;
     width: calc(100% - 25px);
+  }
+
+  .inline-img {
+    filter: invert(0);
+    height: 22px;
+    width: auto;
+    display: inline-block;
+    position: relative;
+    top: 5px;
+    margin-right: 10px;
+  }
+  &.selected,
+  &:hover {
+    .inline-img {
+      filter: invert(1);
+    }
   }
 }
 

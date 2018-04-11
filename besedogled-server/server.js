@@ -17,7 +17,7 @@ app.get('/analiza/:analysisId', async ( req, res ) => {
 
   try {
 
-    // const snippetId    = req.params.snippetId;
+    const analysisId    = req.params.analysisId;
     // const templatePath = `${__dirname}/og_templates/snippet.ejs`;
     // const ogImagePath  = `${__dirname}/og_renders/snippet-${snippetId}.png`;
     const $ = cheerio.load(indexHtml);
@@ -26,8 +26,8 @@ app.get('/analiza/:analysisId', async ( req, res ) => {
     //   fs.exists(`${__dirname}/og_renders/snippet-${snippetId}.png`, ( exists ) => resolve(exists));
     // });
 
-    // // get snippet data from API
-    // const snippetData = JSON.parse(await request(`${config.SNIPPET_URL}?id=${snippetId}`));
+    // get analysis data from API
+    const analysisData = JSON.parse(await request(`http://admin.besedogled.si/getAnalysisMeta/?id=${analysisId}`));
 
     // if ( !ogExists ) {
     //   console.log(`Og count: ${ogCount}`);
@@ -35,25 +35,20 @@ app.get('/analiza/:analysisId', async ( req, res ) => {
     //   renderOg(templatePath, snippetData, ogImagePath);
     // }
 
-    // $('title').text(`${snippetData.name || 'Brez naslova'} - Besedogled`);
-    // $('.removeme').remove();
+    $('title').text(`${analysisData.title || 'Brez naslova'} - Besedogled`);
+    $('.removeme').remove();
     // <meta property="og:image"          content="${config.URL}/images/snippet-${snippetId}.png" />
     // <meta name="twitter:image" content="${config.URL}/images/snippet-${snippetId}.png">
-    // $('head').append(`
-    //   <meta property="og:url"                content="${config.URL}/snippet/${snippetId}" />
-    //   <meta property="og:type"               content="article" />
-    //   <meta property="og:title"              content="${snippetData.name || 'Izsek brez naslova'}" />
-    //   <meta property="og:description"        content="Odreži kateri koli izsek soočenja predsedniških kandidatk in kandidatov in ga deli s prijatelji!" />
+    $('head').append(`
+      <meta property="og:url"                content="http://besedogled.si/analiza/${analysisId}" />
+      <meta property="og:type"               content="article" />
+      <meta property="og:title"              content="${analysisData.title || 'Analiza brez naslova'}" />
       
+      <meta name="twitter:title" content="${analysisData.title || 'Analiza brez naslova'}">
 
-    //   <meta name="twitter:card" content="summary_large_image">
-    //   <meta name="twitter:creator" content="@danesjenovdan">
-    //   <meta name="twitter:title" content="${snippetData.name || 'Izsek brez naslova'}">
-    //   <meta name="twitter:description" content="Odreži kateri koli izsek soočenja predsedniških kandidatk in kandidatov in ga deli s prijatelji!">
-
-    //   <meta property="og:image"          content="${config.URL}/images/snippet-${snippetId}.png?v=5" />
-    //   <meta name="twitter:image" content="${config.URL}/images/snippet-${snippetId}.png?v=5">
-    // `);
+      <meta property="og:image"          content="${analysisData.photo}" />
+      <meta name="twitter:image" content="${analysisData.photo}">
+    `);
 
     res.send($.html());
 
