@@ -102,6 +102,13 @@ $(document).ready(function() {
 
         return words;
       },
+
+      autoConnectionGroups: function() {
+        return this.justWords
+          .filter(w => w[4].connectionGroup)
+          .map(fw => fw[4].connectionGroup)
+          .filter((mw, i, whole) => whole.indexOf(mw) === i);
+      },
     },
     methods: {
       addConnectionGroup: function() {
@@ -137,7 +144,7 @@ $(document).ready(function() {
       },
 
       drawConnections: function(group) {
-        for (group in this.connectionGroups) {
+        for (group in this.autoConnectionGroups) {
           var pairs = [];
           var _vueThis = this;
           $.each($(`.cg-${this.connectionGroups[group]}`), function(i, e) {
@@ -316,6 +323,7 @@ $(document).ready(function() {
       },
     },
     mounted() {
+      this.connectionGroups = this.autoConnectionGroups;
       this.$nextTick(this.drawConnections);
     }
   });
