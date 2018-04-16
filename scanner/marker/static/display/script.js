@@ -109,7 +109,7 @@ $(document).ready(function() {
         this.connectionGroups.push(this.connectionGroups.length + 1);
       },
       updateData: function() {
-        $.post('http://scanner.knedl.si/update-marked/', {
+        $.post('http://admin.besedogled.si/update-marked/', {
             id: document.location.href.split('id=')[1],
             data: JSON.stringify(this.sentences),
         }, function(r) {

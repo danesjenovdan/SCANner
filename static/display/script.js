@@ -104,7 +104,7 @@ $(document).ready(function() {
     methods: {
       updateData: function() {
         console.log(this.sentences);
-        $.post('http://scanner.knedl.si/update-marked/', {
+        $.post('http://admin.besedogled.si/update-marked/', {
             id: document.location.href.split('id=')[1],
             data: JSON.stringify(this.sentences),
         }, function(r) {
