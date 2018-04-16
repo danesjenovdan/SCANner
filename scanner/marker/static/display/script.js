@@ -316,6 +316,7 @@ $(document).ready(function() {
       },
     },
     mounted() {
+      this.$nextTick(this.drawConnections);
     }
   });
 

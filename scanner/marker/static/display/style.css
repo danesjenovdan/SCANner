@@ -369,6 +369,14 @@ footer {
   }
 }
 
+.connection-groups {
+  height: 70px;
+  width: 1px;
+  overflow: hidden;
+}
+.connection-groups.visible {
+  width: auto;
+}
 .connection-group {
   display: inline-block;
   width: 50px;

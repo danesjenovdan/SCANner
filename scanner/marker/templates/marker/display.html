@@ -83,7 +83,7 @@
         <div class="explanation">{{selectedFilterDescription}}</div>
       </div>
       {% verbatim %}
-      <div class="connection-groups" v-if="selectedFilter === 'connection'">
+      <div :class="['connection-groups', {'visible': selectedFilter === 'connection'}]">
         <div :class="['connection-group', {active: activeConnectionGroup === connection}]"
           v-for="connection in connectionGroups"
           @click="activeConnectionGroup === connection ? activeConnectionGroup = null : activeConnectionGroup = connection"
