@@ -1,8 +1,9 @@
 <template>
   <div id="footer">
     <div class="container">
-      <a href="http://ebsi.eu/">Evropski inštitut za vedenjske študije</a>
-      <a href="http://danesjenovdan.si/">Danes je nov dan</a>
+      <a target="_blank" href="http://ebsi.eu/">Evropski inštitut za vedenjske študije</a>
+      <a target="_blank" href="http://danesjenovdan.si/">Danes je nov dan</a>
+      <a target="_blank" href="http://www.rtvslo.si/">RTV Slovenija</a>
     </div>
   </div>
 </template>
