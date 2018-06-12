@@ -4,7 +4,10 @@
       <div class="logo">
         <img src="../../assets/img/media-scanner-logo.svg">
       </div>
-      <p class="intro">Besedogled je analitično orodje za preverjanje skladnosti in koherentnosti besedil. Nastal je na preseku znanstveno-raziskovalnih in forenzično-preiskovalnih metod, ki se osredotočajo na jezik. Tehnike za preverjanje resničnosti, ki temeljijo na telesu, je mogoče zavesti, v jeziku pa se vsi neizogibno razgaljamo do nezavednega.<br><br>Besedogled je analiziral odmevne izjave v Odmevih RTV Slovenija.</p>
+      <p class="intro">Besedogled je analitično orodje za preverjanje skladnosti in koherentnosti besedil. Nastal je na preseku znanstveno-raziskovalnih in forenzično-preiskovalnih metod, ki se osredotočajo na jezik. Tehnike za preverjanje resničnosti, ki temeljijo na telesu, je mogoče zavesti, v jeziku pa se vsi neizogibno razgaljamo do nezavednega.</p>
+      <div class="white-bg">
+        <p class="intro">Besedogled je analiziral odmevne izjave v Odmevih RTV Slovenija.</p>
+      </div>
     </div>
 
     <div class="bubbles-container" v-if="publishedAnalyses.length === 0">
@@ -138,6 +141,14 @@ export default {
           font-size: 20px;
           line-height: 24px;
           padding-bottom: 30px;
+        }
+      }
+
+      .white-bg {
+        background-color: #efeeee;
+
+        .intro {
+          margin-top: 30px;
         }
       }
     }

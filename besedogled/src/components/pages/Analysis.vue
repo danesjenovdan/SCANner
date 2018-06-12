@@ -37,6 +37,7 @@
                   :class="['box', 'box-' + name, {selected: selectedFilter === name}]"
                   @click="activateFilter(name)"
                   :key="name"
+                  :title="tooltips[name]"
                 >
                   {{ explanation }}
                 </div>
@@ -100,6 +101,17 @@ export default {
         circled: 'Osebni zaimki in osebne glagolske oblike',
         underline: 'Uporaba trpnika',
         connection: 'Sled zamenjave jezika',
+      },
+      tooltips: {
+        yellow: 'Stavki v nikalni obliki ali/in odvečna vsebina, ki ni nujno potrebna za konstrukcijo izjave (nepotrebna pojasnjevanja), ter vsakršna nezavezanost k vsebini (npr. mislim da…, verjetno…., nisem prepričan…. najbrž ipd). ',
+        green: 'Vse osebe v izjavi ali/in vsaka zamenjava pojmovanja – uporaba sinonima  (npr. pojem »volilni rezultat« se spremeni v »izid volitev«). Take zamenjave med seboj povežemo s puščico. Zamenjava pojmovanja namreč nakazuje na spremembo odnosa govorca do dotičnega pojma.',
+        blue: 'Navajanje zapuščanja lokacije (npr. odšel, zapustil…) ali/in navajanje razlogov v smislu dodatnega pojasnjevanja (ker, zato da, torej…) kot funkcija prepričevanja.',
+        purple: 'Uporaba osebnih zaimkov mi/midva ali/in navajanje konkretnega časa (npr. ure v dnevu). ',
+        orange: 'Način navajanja komunikacije med osebami (rekel, govoril, dejal…) na podlagi česar govorec razkriva svoj odnos do sogovornika s katerim navaja, da je komuniciral.',
+        pink: 'Odsotnost navajanja konkretnega časa (npr. potem, nato, zatem, ipd), kar nakazuje na t.i. prelom misli oz. neko izpuščeno vsebino.',
+        circled: 'Obkrožujemo osebne zaimke in osebne glagolske oblike, ki izkazujejo zavezanost govorca k vsebini, ki jo izpoveduje. ',
+        underline: 'Podčrtamo dele v izjavi, ki so v trpni obliki (npr. »…kot že rečeno…« namesto uporaba  tvorne oblike: »…kot sem že rekel…«). Uporaba trpnikov nakazuje na distanciranje od vsebine izrečenega.',
+        connection: 'Z njimi povežemo z zeleno označeno zamenjavo pojmovanja (sinonime). ',
       },
       sentences: [],
       analysisId: this.$route.params.analysisId,
