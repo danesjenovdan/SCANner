@@ -32,6 +32,7 @@
           <div class="col-third">
             <affix class="filters" relative-element-selector="#affixer" :enabled="!isMobile">
               <div class="boxes">
+                <h4>Parametri koherentnosti izjav</h4>
                 <div
                   v-for="(explanation, name) in filters"
                   :class="['box', 'box-' + name, {selected: selectedFilter === name}]"
@@ -273,6 +274,13 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Faustina:400,700&subset=latin-ext');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300&subset=latin-ext');
 @import '../../styles/scaffolding';
+
+h4 {
+  font-family: 'Faustina', serif;
+  @include respond-to(mobile) {
+    display: none;
+  }
+}
 
 .goback {
   color: #000000;
