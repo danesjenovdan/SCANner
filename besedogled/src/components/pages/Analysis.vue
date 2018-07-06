@@ -32,7 +32,7 @@
           <div class="col-third">
             <affix class="filters" relative-element-selector="#affixer" :enabled="!isMobile">
               <div class="boxes">
-                <h4>Parametri koherentnosti izjav</h4>
+                <h4>Parametri koherentnosti izjav po metodi SCAN</h4>
                 <div
                   v-for="(explanation, name) in filters"
                   :class="['box', 'box-' + name, {selected: selectedFilter === name}]"
@@ -280,6 +280,7 @@ h4 {
   @include respond-to(mobile) {
     display: none;
   }
+  font-size: 14px;
 }
 
 .goback {
