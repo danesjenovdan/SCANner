@@ -139,6 +139,8 @@ def getAnalysisMeta(request):
         'title':  marked.title,
         'date': marked.date,
         'photo': photo_url,
+        'og_title': marked.og_title,
+        'og_desc': marked.og_desc
     }
 
     if marked.data:

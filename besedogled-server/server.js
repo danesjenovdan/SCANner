@@ -48,6 +48,9 @@ app.get('/analiza/:analysisId', async ( req, res ) => {
 
       <meta property="og:image"          content="${analysisData.photo}" />
       <meta name="twitter:image" content="${analysisData.photo}">
+
+      <meta property="og:description" content="${analysisData.og_desc}" />
+      <meta name="twitter:description" content="${analysisData.og_desc}">
     `);
 
     res.send($.html());

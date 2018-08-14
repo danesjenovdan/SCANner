@@ -16,6 +16,9 @@ class MarkedText(models.Model):
     date = models.DateField(blank=True, null=True)
     photo = models.FileField(blank=True, null=True)
 
+    og_title = models.TextField(blank=True, null=True)
+    og_desc = models.TextField(blank=True, null=True)
+
     def __str__(self):
         return self.text[:50]
 

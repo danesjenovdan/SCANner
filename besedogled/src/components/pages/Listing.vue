@@ -6,7 +6,7 @@
       </div>
       <p class="intro">Besedogled je analitično orodje za preverjanje skladnosti in koherentnosti besedil. Nastal je na preseku znanstveno-raziskovalnih in forenzično-preiskovalnih metod, ki se osredotočajo na jezik. Tehnike za preverjanje resničnosti, ki temeljijo na telesu, je mogoče zavesti, v jeziku pa se vsi neizogibno razgaljamo do nezavednega.</p>
       <div class="white-bg">
-        <p class="intro">Besedogled je analiziral odmevne izjave v Odmevih RTV Slovenija.</p>
+        <p class="intro">Besedogled je orodje, ki ga lahko <a href="https://github.com/danesjenovdan/SCANner" target="_blank">uporabite tudi vi</a>. Za potrebe razvoja smo v procesu analizirali nekatere izjave v Odmevih RTV Slovenija.</p>
       </div>
     </div>
 
@@ -141,6 +141,14 @@ export default {
           font-size: 20px;
           line-height: 24px;
           padding-bottom: 30px;
+        }
+
+        a {
+          color: #000000;
+
+          &:hover {
+            color: #5ec2a7;
+          }
         }
       }
 

@@ -25,14 +25,15 @@
           </div>
         </div>
         <div class="content flex">
-          <div :class="['btn', 'btn-tab', {selected: displayAnalysis}]" @click="displayAnalysis = true"><img class="inline-img" src="../../assets/img/analiza.png">Analiza</div>
           <div :class="['btn', 'btn-tab', {selected: !displayAnalysis}]" @click="displayAnalysis = false"><img class="inline-img" src="../../assets/img/besedilo.png">Transkript</div>
+          <div :class="['btn', 'btn-tab', {selected: displayAnalysis}]" @click="displayAnalysis = true"><img class="inline-img" src="../../assets/img/analiza.png">Analiza</div>
         </div>
         <div class="flex" v-if="!displayAnalysis">
           <div class="col-third">
             <affix class="filters" relative-element-selector="#affixer" :enabled="!isMobile">
               <div class="boxes">
                 <h4>Parametri koherentnosti izjav po metodi SCAN</h4>
+                <p>Scientific Content Analysis je orodje za ugotavljanje notranje koherentnosti izjav, ki temelji na lingvističnih premisah. Z njim prepoznavamo zavestno regulacijo vsebine, ki se odraža v nezavedni regulaciji strukture. Orodje uporabljajo vsi veliki varnostni sistemi in institucije (CIA, FBI, Mosad idr.).</p>
                 <div
                   v-for="(explanation, name) in filters"
                   :class="['box', 'box-' + name, {selected: selectedFilter === name}]"
@@ -120,7 +121,7 @@ export default {
       videoUrl: '',
       title: '',
       date: '',
-      displayAnalysis: true,
+      displayAnalysis: false,
       isMobile: isMobile.any,
     };
   },
@@ -281,6 +282,17 @@ h4 {
     display: none;
   }
   font-size: 14px;
+  margin-top: 7px;
+  margin-bottom: 0;
+  text-align: left;
+  width: 100%;
+}
+.boxes p {
+  font-size: 12px;
+
+  @include respond-to(mobile) {
+    display: none;
+  }
 }
 
 .goback {
@@ -317,7 +329,7 @@ h4 {
 
 .vue-affix {
   padding-top: 20px;
-  max-width: 300px;
+  width: 298px;
 }
 
 #affixer {
@@ -581,40 +593,76 @@ h4 {
     // BOXES BACKGROUND
     .box-yellow {
       background-color: rgba(253, 231, 88, 0.2);
+
+      &.selected {
+        background-color: rgba(253, 231, 88, 1);
+      }
     }
 
     .box-green {
       background-color: rgba(113, 203, 149, 0.2);
+
+      &.selected {
+        background-color: rgba(113, 203, 149, 1);
+      }
     }
 
     .box-blue {
       background-color: rgba(95, 183, 245, 0.2);
+
+      &.selected {
+        background-color: rgba(95, 183, 245, 1);
+      }
     }
 
     .box-violet,
     .box-purple {
       background-color: rgba(149, 97, 245, 0.2);
+
+      &.selected {
+        background-color: rgba(149, 97, 245, 1);
+      }
     }
 
     .box-orange {
       background-color: rgba(255, 183, 89, 0.2);
+
+      &.selected {
+        background-color: rgba(255, 183, 89, 1);
+      }
     }
 
     .box-pink {
       background-color: rgba(250, 129, 197, 0.2);
+
+      &.selected {
+        background-color: rgba(250, 129, 197, 1);
+      }
     }
 
     .box-circle,
     .box-circled {
       background-color: rgba(195, 195, 195, 0.2);
+
+      &.selected {
+        background-color: rgba(195, 195, 195, 1);
+      }
     }
 
     .box-underline {
       background-color: rgba(209, 209, 209, 0.2);
+
+      &.selected {
+        background-color: rgba(209, 209, 209, 1);
+      }
     }
 
     .box-connection {
       background-color: hsla(0, 0%, 89%, 0.2);
+
+      &.selected {
+        background-color: hsla(0, 0%, 89%, 1);
+      }
     }
   }
 }
